@@ -12,6 +12,7 @@
     <!-- Navigation Menu -->
     <div class="ui five item inverted green menu">
         <a class="item" href="/">
+            <i class="home alternate icon"></i>
             Home
         </a>
         <a class="item" href="/sp">
@@ -24,7 +25,8 @@
             Notifications
         </a>
         <a class="item" href="/user">
-            Login
+            <i class="user alternate outline icon"></i>
+            <p id="user"></p>
         </a>
     </div>
 
@@ -78,10 +80,17 @@
     <hr>
 </script>
 
-<!-- User Template -->
-<script id="user-template" type="text/x-handlebars-template">
+<!-- Login Template -->
+<script id="login-template" type="text/x-handlebars-template">
     <h1 class="ui header">Login</h1>
     <hr>
+</script>
+
+<!-- Logout Template -->
+<script id="logout-template" type="text/x-handlebars-template">
+    <h1 class="ui header">{{user}}</h1>
+    <hr>
+    <button onclick="logoutFunction()">Logout</button>
 </script>
 </body>
 </html>

@@ -7,7 +7,8 @@ window.addEventListener('load', () => {
     const spTemplate = Handlebars.compile($('#sp-template').html());
     const addresserTemplate = Handlebars.compile($('#addresser-template').html());
     const notificationTemplate = Handlebars.compile($('#notification-template').html());
-    const userTemplate = Handlebars.compile($('#user-template').html());
+    const loginTemplate = Handlebars.compile($('#login-template').html());
+    const logoutTemplate = Handlebars.compile($('#logout-template').html());
 
     // Router Declaration
     const router = new Router({
@@ -43,7 +44,16 @@ window.addEventListener('load', () => {
     });
 
     router.add('/user', () => {
-        let html = userTemplate();
+        //check if logged in or not
+        const user = getUser();
+        let html;
+
+        if(user) {
+            html = logoutTemplate({user: getUser()});
+        } else {
+            html = loginTemplate();
+        }
+
         el.html(html);
     });
 
@@ -69,3 +79,24 @@ window.addEventListener('load', () => {
         router.navigateTo(path);
     });
 });
+
+// Set Navigation Bar User Name
+window.onload = function () {
+    //localStorage.setItem("user", "Test");
+    const user = getUser();
+    if(user) {
+        document.getElementById("user").style.color = "black";
+        document.getElementById("user").textContent = user;
+    } else {
+        document.getElementById("user").textContent = "Login";
+    }
+};
+
+function logoutFunction() {
+    localStorage.removeItem("user");
+    location.reload();
+}
+
+function getUser() {
+    return localStorage.getItem("user");
+}
