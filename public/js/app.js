@@ -1,3 +1,9 @@
+// Instantiate api handler
+const api = axios.create({
+    baseURL: 'http://localhost:3001',
+    timeout: 5000,
+});
+
 window.addEventListener('load', () => {
     const el = $('#app');
 
@@ -10,7 +16,7 @@ window.addEventListener('load', () => {
     const loginTemplate = Handlebars.compile($('#login-template').html());
     const logoutTemplate = Handlebars.compile($('#logout-template').html());
 
-    // Router Declaration
+    // Handler Declaration
     const router = new Router({
         mode: 'history',
         page404: (path) => {
@@ -43,7 +49,7 @@ window.addEventListener('load', () => {
         el.html(html);
     });
 
-    router.add('/user', () => {
+    router.add('/user', async () => {
         //check if logged in or not
         const user = getUser();
         let html;
@@ -55,12 +61,26 @@ window.addEventListener('load', () => {
         }
 
         el.html(html);
+
+        // overwrite default submit behavior
+        const form = document.getElementById("form");
+        form.onsubmit = async function () {
+            event.preventDefault();
+            const body = {
+                email: form.elements.email.value,
+                password: form.elements.password.value
+            }
+
+            alert(body.email + " " + body.password);
+            const response = await api.post("/user/signIn", body);
+            document.getElementById("error").innerHTML = response;
+        }
     });
 
-// Navigate app to current url
+    // Navigate app to current url
     router.navigateTo(window.location.pathname);
 
-// Highlight Active Menu on Refresh/Page Reload
+    // Highlight Active Menu on Refresh/Page Reload
     const link = $(`a[href$='${window.location.pathname}']`);
     link.addClass('active');
 
@@ -100,3 +120,4 @@ function logoutFunction() {
 function getUser() {
     return localStorage.getItem("user");
 }
+
