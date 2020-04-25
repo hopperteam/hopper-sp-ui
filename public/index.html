@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="scripts/semantic-ui-css/semantic.min.css">
+    <title>Test SP</title>
+</head>
+<body>
+<div class="ui container">
+    <!-- Navigation Menu -->
+    <div class="ui five item inverted green menu">
+        <a class="item" href="/">
+            Home
+        </a>
+        <a class="item" href="/sp">
+            Service Providers
+        </a>
+        <a class="item" href="/addresser">
+            Addressers
+        </a>
+        <a class="item" href="/notification">
+            Notifications
+        </a>
+        <a class="item" href="/user">
+            Login
+        </a>
+    </div>
+
+    <!-- Application Root -->
+    <div id="app"></div>
+</div>
+
+<!-- JS Library Dependencies -->
+<script src="scripts/jquery/dist/jquery.min.js"></script>
+<script src="scripts/semantic-ui-css/semantic.min.js"></script>
+<script src="scripts/axios/dist/axios.min.js"></script>
+<script src="scripts/handlebars/dist/handlebars.min.js"></script>
+<script src="scripts/vanilla-router/dist/vanilla-router.min.js"></script>
+<script src="js/app.js"></script>
+
+<!-- Error Template -->
+<script id="error-template" type="text/x-handlebars-template">
+    <div class="ui {{color}} inverted segment" style="height:250px;">
+        <br>
+        <h2 class="ui center aligned icon header">
+            <i class="exclamation triangle icon"></i>
+            <div class="content">
+                {{title}}
+                <div class="sub header">{{message}}</div>
+            </div>
+        </h2>
+    </div>
+</script>
+
+<!-- Home Template -->
+<script id="overview-template" type="text/x-handlebars-template">
+    <h1 class="ui header">Overview</h1>
+    <hr>
+</script>
+
+<!-- Service Provider Template -->
+<script id="sp-template" type="text/x-handlebars-template">
+    <h1 class="ui header">Service Providers</h1>
+    <hr>
+</script>
+
+<!-- Addresser Template -->
+<script id="addresser-template" type="text/x-handlebars-template">
+    <h1 class="ui header">Addressers</h1>
+    <hr>
+</script>
+
+<!-- Notification Template -->
+<script id="notification-template" type="text/x-handlebars-template">
+    <h1 class="ui header">Notifications</h1>
+    <hr>
+</script>
+
+<!-- User Template -->
+<script id="user-template" type="text/x-handlebars-template">
+    <h1 class="ui header">Login</h1>
+    <hr>
+</script>
+</body>
+</html>
