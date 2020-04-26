@@ -62,11 +62,15 @@
 <script id="overview-template" type="text/x-handlebars-template">
     <h1 class="ui header">Overview</h1>
     <hr>
-    <fieldset>
-        <legend>Service Provider</legend>
-        <div class="ui loading basic segment">
-            <table class="ui celled striped selectable inverted table">
-                <thead>
+    <div class="ui styled fluid accordion">
+        <div class="title">
+            <i class="dropdown icon"></i>
+            Service Provider
+        </div>
+        <div class="content">
+            <div class="ui loading basic segment">
+                <table class="ui celled striped selectable inverted table">
+                    <thead>
                     <tr>
                         <th>id</th>
                         <th>name</th>
@@ -76,8 +80,8 @@
                         <th>manageUrl</th>
                         <th>contactEmail</th>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     {{#each apps}}
                         <td>{{this.id}}</td>
                         <td>{{this.name}}</td>
@@ -87,25 +91,66 @@
                         <td>{{this.manageUrl}}</td>
                         <td>{{this.contactEmail}}</td>
                     {{/each}}
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </fieldset>
+    </div>
 </script>
 
 <!-- Service Provider Template -->
 <script id="sp-template" type="text/x-handlebars-template">
     <h1 class="ui header">Service Providers</h1>
     <hr>
-    <form id="formSp">
-    <fieldset>
-        <legend>Create New</legend>
-        Email: <input name="email" type="text" value="" required> <br>
-        Password: <input name="password" type="password" value="" required> <br>
-        <input type="submit" value="Sign In">
-        <p id="errorSignIn"></p>
-    </fieldset>
-    </form>
+    <div class="ui styled fluid accordion">
+        <div class="title">
+            <i class="dropdown icon"></i>
+            Create
+        </div>
+        <div class="content">
+            <form class="ui form" id="formCreateSp">
+                <div class="field">
+                    <label>Name</label>
+                    <input name="name" type="text" placeholder="Name" required>
+                </div>
+                <div class="field">
+                    <label>Image Url</label>
+                    <input name="imageUrl" type="text" placeholder="Image Url" required>
+                </div>
+                <div class="field">
+                    <label>Manage Url</label>
+                    <input name="manageUrl" type="text" placeholder="Manage Url" required>
+                </div>
+                <div class="field">
+                    <label>Contact Email</label>
+                    <input name="contactEmail" type="text" placeholder="Contact Email" required>
+                </div>
+                <div class="inline field">
+                    <div class="ui toggle checkbox">
+                        <input name="isHidden" type="checkbox">
+                        <label>Is Hidden</label>
+                    </div>
+                </div>
+                <button class="ui button" type="submit">Submit</button>
+                <p id="errorCreateSp"></p>
+            </form>
+        </div>
+    </div>
+
+    <div class="ui styled fluid accordion">
+        <div class="title">
+            <i class="dropdown icon"></i>
+            Update
+        </div>
+        <div class="content">
+            <form id="formSignIn">
+                Email: <input name="email" type="text" value="" required> <br>
+                Password: <input name="password" type="password" value="" required> <br>
+                <input type="submit" value="Sign In">
+                <p id="errorSignIn"></p>
+            </form>
+        </div>
+    </div>
 </script>
 
 <!-- Addresser Template -->
@@ -124,26 +169,47 @@
 <script id="login-template" type="text/x-handlebars-template">
     <h1 class="ui header">Login</h1>
     <hr>
-    <form id="formSignIn">
-        <fieldset>
-            <legend>Sign In</legend>
-            Email: <input name="email" type="text" value="" required> <br>
-            Password: <input name="password" type="password" value="" required> <br>
-            <input type="submit" value="Sign In">
-            <p id="errorSignIn"></p>
-        </fieldset>
-    </form>
-    <form id="formSignUp">
-        <fieldset>
-            <legend>Sign Up</legend>
-            Email: <input name="email" type="text" value="" required> <br>
-            Password: <input name="password" type="password" value="" required> <br>
-            <input type="submit" value="Sign Up">
-            <p id="errorSignUp"></p>
-        </fieldset>
-    </form>
+    <div class="ui styled fluid accordion">
+        <div class="title">
+            <i class="dropdown icon"></i>
+            Sign In
+        </div>
+        <div class="content">
+            <form class="ui form" id="formSignIn">
+                <div class="field">
+                    <label>Email</label>
+                    <input name="email" type="text" placeholder="max.musterman@example.com" required> <br>
+                </div>
+                <div class="field">
+                    <label>Password</label>
+                    <input name="password" type="password" value="" required>
+                </div>
+                <button class="ui button" type="submit">Submit</button>
+                <p id="errorSignIn"></p>
+            </form>
+        </div>
+    </div>
 
-
+    <div class="ui styled fluid accordion">
+        <div class="title">
+            <i class="dropdown icon"></i>
+            Sign Up
+        </div>
+        <div class="content">
+            <form class="ui form" id="formSignUp">
+                <div class="field">
+                    <label>Email</label>
+                    <input name="email" type="text" placeholder="max.musterman@example.com" required> <br>
+                </div>
+                <div class="field">
+                    <label>Password</label>
+                    <input name="password" type="password" value="" required>
+                </div>
+                <button class="ui button" type="submit">Submit</button>
+                <p id="errorSignUp"></p>
+            </form>
+        </div>
+    </div>
 </script>
 
 <!-- Logout Template -->

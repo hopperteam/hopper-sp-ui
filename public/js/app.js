@@ -38,26 +38,40 @@ window.addEventListener('load', () => {
     router.add('/', async () => {
         let html = homeTemplate();
         el.html(html);
-        try {
-            // Load Service Provider
-            const response = await api.get("/sp/getAll", {
-                params: {
-                    token: getToken()
-                }
-            });
-            const apps = response.data;
-            let html = homeTemplate({apps: apps});
-            el.html(html);
-        } catch (e) {
-            showError("Error", "An unexpected error occurred");
-        } finally {
-            $('.loading').removeClass('loading');
+
+        if(getUser()){
+            try {
+                // Load Service Provider
+                const response = await api.get("/sp/getAll", {
+                    params: {
+                        token: getToken()
+                    }
+                });
+                const apps = response.data;
+                let html = homeTemplate({apps: apps});
+                el.html(html);
+            } catch (e) {
+                showError("Error", "An unexpected error occurred");
+            }
         }
+
+        $('.loading').removeClass('loading');
+        $('.ui.accordion')
+            .accordion()
+        ;
     });
 
     router.add('/sp', () => {
         let html = spTemplate();
         el.html(html);
+
+        if(!user) {
+            $('.ui.accordion')
+                .accordion()
+            ;
+            await overwriteCreateSpForm(api, showError);
+        }
+
     });
 
     router.add('/addresser', () => {
@@ -84,6 +98,9 @@ window.addEventListener('load', () => {
         el.html(html);
 
         if(!user) {
+            $('.ui.accordion')
+                .accordion()
+            ;
             await overwriteSignInForm(api, showError);
             await overwriteSignUpForm(api, showError);
         }
