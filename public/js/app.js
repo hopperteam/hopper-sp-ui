@@ -68,26 +68,9 @@ window.addEventListener('load', () => {
 
         el.html(html);
 
-        // overwrite default submit behavior
-        const form = document.getElementById("form");
-        form.onsubmit = async function () {
-            event.preventDefault();
-            const body = {
-                email: form.elements.email.value,
-                password: form.elements.password.value
-            };
-
-            const response = await api.post("/user/signIn", body);
-            try {
-                const status = response.data.status;
-                console.log(status);
-                if(status.toString().localeCompare("success") == 0){
-                    setUser(form.elements.email.value);
-                    location.replace("/");
-                }
-            } catch (e) {
-                showError("Error", "An unexpected error occurred");
-            }
+        if(!user) {
+            await overwriteSignInForm(api, showError);
+            await overwriteSignUpForm(api, showError);
         }
     });
 

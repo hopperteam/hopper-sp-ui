@@ -15,13 +15,13 @@
             <i class="home alternate icon"></i>
             Home
         </a>
-        <a class="item" href="/sp">
+        <a class="item" id="sp" href="/sp">
             Service Providers
         </a>
-        <a class="item" href="/addresser">
+        <a class="item" id="ad" href="/addresser">
             Addressers
         </a>
-        <a class="item" href="/notification">
+        <a class="item" id="nt" href="/notification">
             Notifications
         </a>
         <a class="item" href="/user">
@@ -41,6 +41,8 @@
 <script src="scripts/handlebars/dist/handlebars.min.js"></script>
 <script src="scripts/vanilla-router/dist/vanilla-router.min.js"></script>
 <script src="js/app.js"></script>
+<script src="js/signIn.js"></script>
+<script src="js/signUp.js"></script>
 
 <!-- Error Template -->
 <script id="error-template" type="text/x-handlebars-template">
@@ -84,18 +86,25 @@
 <script id="login-template" type="text/x-handlebars-template">
     <h1 class="ui header">Login</h1>
     <hr>
-    <form id="form">
+    <form id="formSignIn">
         <fieldset>
             <legend>Sign In</legend>
             Email: <input name="email" type="text" value="" required> <br>
             Password: <input name="password" type="password" value="" required> <br>
             <input type="submit" value="Sign In">
-            <p id="error"></p>
+            <p id="errorSignIn"></p>
         </fieldset>
     </form>
-    <fieldset>
-        <legend>Sign Up</legend>
-    </fieldset>
+    <form id="formSignUp">
+        <fieldset>
+            <legend>Sign Up</legend>
+            Email: <input name="email" type="text" value="" required> <br>
+            Password: <input name="password" type="password" value="" required> <br>
+            <input type="submit" value="Sign Up">
+            <p id="errorSignUp"></p>
+        </fieldset>
+    </form>
+
 
 </script>
 
