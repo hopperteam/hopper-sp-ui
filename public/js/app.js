@@ -1,9 +1,3 @@
-// Instantiate api handler
-const api = axios.create({
-    baseURL: 'http://localhost:3001',
-    timeout: 5000,
-});
-
 window.addEventListener('load', () => {
     const el = $('#app');
 
@@ -28,6 +22,18 @@ window.addEventListener('load', () => {
             el.html(html);
         },
     });
+
+    // Instantiate api handler
+    const api = axios.create({
+        baseURL: 'http://localhost:3001',
+        timeout: 5000,
+    });
+
+    // Display Error Banner
+    const showError = (title, message) => {
+        const html = errorTemplate({ color: 'red', title, message });
+        el.html(html);
+    };
 
     router.add('/', () => {
         let html = homeTemplate();
@@ -69,11 +75,19 @@ window.addEventListener('load', () => {
             const body = {
                 email: form.elements.email.value,
                 password: form.elements.password.value
-            }
+            };
 
-            alert(body.email + " " + body.password);
             const response = await api.post("/user/signIn", body);
-            document.getElementById("error").innerHTML = response;
+            try {
+                const status = response.data.status;
+                console.log(status);
+                if(status.toString().localeCompare("success") == 0){
+                    setUser(form.elements.email.value);
+                    location.replace("/");
+                }
+            } catch (e) {
+                showError("Error", "An unexpected error occurred");
+            }
         }
     });
 
@@ -119,5 +133,9 @@ function logoutFunction() {
 
 function getUser() {
     return localStorage.getItem("user");
+}
+
+function setUser(user) {
+    return localStorage.setItem("user", user);
 }
 
