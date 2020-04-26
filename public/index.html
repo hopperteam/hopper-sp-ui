@@ -62,12 +62,50 @@
 <script id="overview-template" type="text/x-handlebars-template">
     <h1 class="ui header">Overview</h1>
     <hr>
+    <fieldset>
+        <legend>Service Provider</legend>
+        <div class="ui loading basic segment">
+            <table class="ui celled striped selectable inverted table">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>name</th>
+                        <th>imageUrl</th>
+                        <th>isHidden</th>
+                        <th>baseUrl</th>
+                        <th>manageUrl</th>
+                        <th>contactEmail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each apps}}
+                        <td>{{this.id}}</td>
+                        <td>{{this.name}}</td>
+                        <td>{{this.imageUrl}}</td>
+                        <td>{{this.isHidden}}</td>
+                        <td>{{this.baseUrl}}</td>
+                        <td>{{this.manageUrl}}</td>
+                        <td>{{this.contactEmail}}</td>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
 </script>
 
 <!-- Service Provider Template -->
 <script id="sp-template" type="text/x-handlebars-template">
     <h1 class="ui header">Service Providers</h1>
     <hr>
+    <form id="formSp">
+    <fieldset>
+        <legend>Create New</legend>
+        Email: <input name="email" type="text" value="" required> <br>
+        Password: <input name="password" type="password" value="" required> <br>
+        <input type="submit" value="Sign In">
+        <p id="errorSignIn"></p>
+    </fieldset>
+    </form>
 </script>
 
 <!-- Addresser Template -->

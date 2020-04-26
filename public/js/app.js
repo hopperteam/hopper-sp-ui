@@ -35,9 +35,24 @@ window.addEventListener('load', () => {
         el.html(html);
     };
 
-    router.add('/', () => {
+    router.add('/', async () => {
         let html = homeTemplate();
         el.html(html);
+        try {
+            // Load Service Provider
+            const response = await api.get("/sp/getAll", {
+                params: {
+                    token: getToken()
+                }
+            });
+            const apps = response.data;
+            let html = homeTemplate({apps: apps});
+            el.html(html);
+        } catch (e) {
+            showError("Error", "An unexpected error occurred");
+        } finally {
+            $('.loading').removeClass('loading');
+        }
     });
 
     router.add('/sp', () => {
@@ -111,6 +126,7 @@ window.onload = function () {
 
 function logoutFunction() {
     localStorage.removeItem("user");
+    localStorage.removeItem("userToken");
     location.reload();
 }
 
@@ -122,3 +138,10 @@ function setUser(user) {
     return localStorage.setItem("user", user);
 }
 
+function getToken(){
+    return localStorage.getItem("userToken");
+}
+
+function setToken(token) {
+    return localStorage.setItem("userToken", token);
+}

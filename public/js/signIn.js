@@ -13,6 +13,7 @@ async function overwriteSignInForm(api) {
             const status = response.data.status.toString();
             if(status.localeCompare("success") == 0){
                 setUser(form.elements.email.value);
+                setToken(response.data.token);
                 location.replace("/");
             } else {
                 const field = document.getElementById("errorSignIn");
