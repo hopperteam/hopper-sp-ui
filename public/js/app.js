@@ -68,6 +68,8 @@ window.addEventListener('load', () => {
         let html = spTemplate();
         el.html(html);
 
+        const user = getUser();
+
         $('.ui.accordion')
             .accordion()
         ;
@@ -75,6 +77,7 @@ window.addEventListener('load', () => {
         if(user) {
             await overwriteCreateSpForm(api, showError);
         } else{
+            document.getElementById("CreateSp").disabled = true;
             const field = document.getElementById("errorCreateSp");
             field.style.color = "red";
             field.textContent = "Please login";

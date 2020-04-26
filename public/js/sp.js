@@ -1,4 +1,4 @@
-async function overwriteCreateSpForm(api) {
+async function overwriteCreateSpForm(api, showError) {
     // overwrite default submit behavior
     const form = document.getElementById("formCreateSp");
     form.onsubmit = async function () {
