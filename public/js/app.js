@@ -38,6 +38,9 @@ window.addEventListener('load', () => {
     router.add('/', async () => {
         let html = homeTemplate();
         el.html(html);
+        $('.ui.accordion')
+            .accordion()
+        ;
 
         if(getUser()){
             try {
@@ -50,28 +53,32 @@ window.addEventListener('load', () => {
                 const apps = response.data;
                 let html = homeTemplate({apps: apps});
                 el.html(html);
+                $('.ui.accordion')
+                    .accordion()
+                ;
             } catch (e) {
                 showError("Error", "An unexpected error occurred");
             }
         }
 
         $('.loading').removeClass('loading');
-        $('.ui.accordion')
-            .accordion()
-        ;
     });
 
-    router.add('/sp', () => {
+    router.add('/sp', async () => {
         let html = spTemplate();
         el.html(html);
 
-        if(!user) {
-            $('.ui.accordion')
-                .accordion()
-            ;
-            await overwriteCreateSpForm(api, showError);
-        }
+        $('.ui.accordion')
+            .accordion()
+        ;
 
+        if(user) {
+            await overwriteCreateSpForm(api, showError);
+        } else{
+            const field = document.getElementById("errorCreateSp");
+            field.style.color = "red";
+            field.textContent = "Please login";
+        }
     });
 
     router.add('/addresser', () => {

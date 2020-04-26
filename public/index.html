@@ -43,6 +43,7 @@
 <script src="js/app.js"></script>
 <script src="js/signIn.js"></script>
 <script src="js/signUp.js"></script>
+<script src="js/sp.js"></script>
 
 <!-- Error Template -->
 <script id="error-template" type="text/x-handlebars-template">
@@ -83,13 +84,15 @@
                     </thead>
                     <tbody>
                     {{#each apps}}
-                        <td>{{this.id}}</td>
-                        <td>{{this.name}}</td>
-                        <td>{{this.imageUrl}}</td>
-                        <td>{{this.isHidden}}</td>
-                        <td>{{this.baseUrl}}</td>
-                        <td>{{this.manageUrl}}</td>
-                        <td>{{this.contactEmail}}</td>
+                        <tr>
+                            <td>{{this.id}}</td>
+                            <td>{{this.name}}</td>
+                            <td>{{this.imageUrl}}</td>
+                            <td>{{this.isHidden}}</td>
+                            <td>{{this.baseUrl}}</td>
+                            <td>{{this.manageUrl}}</td>
+                            <td>{{this.contactEmail}}</td>
+                        </tr>
                     {{/each}}
                     </tbody>
                 </table>
