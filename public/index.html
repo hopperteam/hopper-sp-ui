@@ -100,6 +100,36 @@
             </div>
         </div>
     </div>
+    <div class="ui styled fluid accordion">
+        <div class="title">
+            <i class="dropdown icon"></i>
+            Addresser
+        </div>
+        <div class="content">
+            <div class="ui loading basic segment">
+                <table class="ui celled striped selectable inverted table">
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>accountName</th>
+                        <th>appId</th>
+                        <th>appName</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each addressers}}
+                        <tr>
+                            <td>{{this.id}}</td>
+                            <td>{{this.accountName}}</td>
+                            <td>{{this.app.id}}</td>
+                            <td>{{this.app.name}}</td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </script>
 
 <!-- Service Provider Template -->

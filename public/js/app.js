@@ -45,13 +45,21 @@ window.addEventListener('load', () => {
         if(getUser()){
             try {
                 // Load Service Provider
-                const response = await api.get("/sp/getAll", {
+                // do all request and then wait
+                let addresser = api.get("/addresser/getAll", {
                     params: {
                         token: getToken()
                     }
                 });
-                const apps = response.data;
-                let html = homeTemplate({apps: apps});
+                console.log(addresser);
+                let sp = api.get("/sp/getAll", {
+                    params: {
+                        token: getToken()
+                    }
+                });
+                const apps = (await sp).data;
+                const addressers = (await addresser).data;
+                let html = homeTemplate({apps: apps, addressers: addressers});
                 el.html(html);
                 $('.ui.accordion')
                     .accordion()
