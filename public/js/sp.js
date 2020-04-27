@@ -17,7 +17,6 @@ async function overwriteCreateSpForm(api, showError) {
             }
         });
         try {
-            console.log(response);
             const status = response.data.status.toString();
             if (status.localeCompare("success") == 0) {
                 location.replace("/");
@@ -56,7 +55,7 @@ async function overwriteUpdateSpForm(api, showError) {
             if (status.localeCompare("success") == 0) {
                 location.replace("/");
             } else {
-                const field = document.getElementById("errorCreateSP");
+                const field = document.getElementById("errorUpdateSP");
                 field.style.color = "red";
                 field.textContent = response.data.reason.toString();
             }
