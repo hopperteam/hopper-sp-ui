@@ -21,7 +21,7 @@ async function overwriteCreateSpForm(api, showError) {
             if (status.localeCompare("success") == 0) {
                 location.replace("/");
             } else {
-                const field = document.getElementById("errorCreateSP");
+                const field = document.getElementById("errorCreateSp");
                 field.style.color = "red";
                 field.textContent = response.data.reason.toString();
             }

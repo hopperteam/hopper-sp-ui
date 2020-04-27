@@ -45,6 +45,7 @@
 <script src="js/signUp.js"></script>
 <script src="js/sp.js"></script>
 <script src="js/addresser.js"></script>
+<script src="js/notification.js"></script>
 
 <!-- Error Template -->
 <script id="error-template" type="text/x-handlebars-template">
@@ -65,11 +66,11 @@
     <h1 class="ui header">Overview</h1>
     <hr>
     <div class="ui styled fluid accordion">
-        <div class="title">
+        <div class="active title">
             <i class="dropdown icon"></i>
             Service Provider
         </div>
-        <div class="content">
+        <div class="active content">
             <div class="ui loading basic segment">
                 <table class="ui celled striped selectable inverted table">
                     <thead>
@@ -101,11 +102,11 @@
         </div>
     </div>
     <div class="ui styled fluid accordion">
-        <div class="title">
+        <div class="active title">
             <i class="dropdown icon"></i>
             Addresser
         </div>
-        <div class="content">
+        <div class="active content">
             <div class="ui loading basic segment">
                 <table class="ui celled striped selectable inverted table">
                     <thead>
@@ -121,8 +122,49 @@
                         <tr>
                             <td>{{this.id}}</td>
                             <td>{{this.accountName}}</td>
-                            <td>{{this.app.id}}</td>
                             <td>{{this.app.name}}</td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="ui styled fluid accordion">
+        <div class="active title">
+            <i class="dropdown icon"></i>
+            Notification
+        </div>
+        <div class="active content">
+            <div class="ui loading basic segment">
+                <table class="ui celled striped selectable inverted table">
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>heading</th>
+                        <th>imageUrl</th>
+                        <th>type</th>
+                        <th>timestamp</th>
+                        <th>isDone</th>
+                        <th>isSilent</th>
+                        <th>isArchived</th>
+                        <th>content</th>
+                        <th>addresserAccountName</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each notifications}}
+                        <tr>
+                            <td>{{this.id}}</td>
+                            <td>{{this.heading}}</td>
+                            <td>{{this.imageUrl}}</td>
+                            <td>{{this.type}}</td>
+                            <td>{{this.timestamp}}</td>
+                            <td>{{this.isDone}}</td>
+                            <td>{{this.isSilent}}</td>
+                            <td>{{this.isArchived}}</td>
+                            <td>{{this.content}}</td>
+                            <td>{{this.addresser.accountName}}</td>
                         </tr>
                     {{/each}}
                     </tbody>
@@ -137,11 +179,11 @@
     <h1 class="ui header">Service Providers</h1>
     <hr>
     <div class="ui styled fluid accordion">
-        <div class="title">
+        <div class="active title">
             <i class="dropdown icon"></i>
             Create
         </div>
-        <div class="content">
+        <div class="active content">
             <form class="ui form" id="formCreateSp">
                 <div class="field">
                     <label>Name</label>
@@ -153,7 +195,7 @@
                 </div>
                 <div class="field">
                     <label>Manage Url</label>
-                    <input name="manageUrl" type="text" placeholder="Manage Url" required>
+                    <input name="manageUrl" type="text" placeholder="Manage Url">
                 </div>
                 <div class="field">
                     <label>Contact Email</label>
@@ -169,9 +211,7 @@
                 <p id="errorCreateSp"></p>
             </form>
         </div>
-    </div>
 
-    <div class="ui styled fluid accordion">
         <div class="title">
             <i class="dropdown icon"></i>
             Update
@@ -255,31 +295,97 @@
 <script id="addresser-template" type="text/x-handlebars-template">
     <h1 class="ui header">Addressers</h1>
     <hr>
-    <form class="ui form" id="formCreateAddresser">
-        <div class="field">
-            <label>Account Name</label>
-            <input name="accountName" type="text" placeholder="Account Name" required>
+    <div class="ui styled fluid accordion">
+        <div class="active title">
+            <i class="dropdown icon"></i>
+            Create
         </div>
+        <div class="active content">
+            <form class="ui form" id="formCreateAddresser">
+                <div class="field">
+                    <label>Account Name</label>
+                    <input name="accountName" type="text" placeholder="Account Name" required>
+                </div>
 
-        <div class="field">
-            <label>Service</label>
-            <select name="appId" class="ui fluid dropdown">
-                <option value=""></option>
-                {{#each apps}}
-                    <option value="{{this.id}}">{{this.name}}</option>
-                {{/each}}
-            </select>
+                <div class="field">
+                    <label>Service</label>
+                    <select name="appId" class="ui fluid dropdown">
+                        <option value=""></option>
+                        {{#each apps}}
+                            <option value="{{this.id}}">{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <button class="ui button" id="CreateAddresser" type="submit">Submit</button>
+                <p id="errorCreateAddresser"></p>
+            </form>
         </div>
-
-        <button class="ui button" id="CreateAddresser" type="submit">Submit</button>
-        <p id="errorCreateAddresser"></p>
-    </form>
+    </div>
 </script>
 
 <!-- Notification Template -->
 <script id="notification-template" type="text/x-handlebars-template">
     <h1 class="ui header">Notifications</h1>
     <hr>
+    <div class="ui styled fluid accordion">
+        <div class="active title">
+            <i class="dropdown icon"></i>
+            Create
+        </div>
+        <div class="active content">
+            <form class="ui form" id="formCreateNotification">
+                <div class="field">
+                    <label>Addresser</label>
+                    <select name="addresserId" class="ui fluid dropdown">
+                        <option value=""></option>
+                        {{#each addressers}}
+                            <option value="{{this.id}}">{{this.accountName}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Heading</label>
+                    <input name="heading" type="text" placeholder="Heading" required>
+                </div>
+                <div class="field">
+                    <label>Image Url</label>
+                    <input name="imageUrl" type="text" placeholder="Image Url">
+                </div>
+                <div class="field">
+                    <label>Type</label>
+                    <input name="type" type="text" value="default" required>
+                </div>
+                <div class="inline field">
+                    <div class="ui toggle checkbox">
+                        <input name="isDone" type="checkbox">
+                        <label>Is Done</label>
+                    </div>
+                </div>
+                <div class="inline field">
+                    <div class="ui toggle checkbox">
+                        <input name="isSilent" type="checkbox">
+                        <label>Is Silent</label>
+                    </div>
+                </div>
+                <div class="inline field">
+                    <div class="ui toggle checkbox">
+                        <input name="isArchived" type="checkbox">
+                        <label>Is Archived</label>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Content</label>
+                    <textarea name="content" required></textarea>
+                </div>
+
+                <button class="ui button" id="CreateNotification" type="submit">Submit</button>
+                <p id="errorCreateNotification"></p>
+            </form>
+        </div>
+    </div>
 </script>
 
 <!-- Login Template -->
@@ -331,9 +437,12 @@
 
 <!-- Logout Template -->
 <script id="logout-template" type="text/x-handlebars-template">
-    <h1 class="ui header">{{user}}</h1>
+    <h1 class="ui header">Account: <i>{{user}}</i></h1>
     <hr>
-    <button onclick="logoutFunction()">Logout</button>
+    <button class="fluid right labeled icon ui button" onclick="logoutFunction()">
+        <i class="right arrow icon"></i>
+        Logout
+    </button>
 </script>
 </body>
 </html>

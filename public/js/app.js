@@ -51,15 +51,20 @@ window.addEventListener('load', () => {
                         token: getToken()
                     }
                 });
-                console.log(addresser);
                 let sp = api.get("/sp/getAll", {
                     params: {
                         token: getToken()
                     }
                 });
-                const apps = (await sp).data;
+                let noti = api.get("/notification/getAll", {
+                    params: {
+                        token: getToken()
+                    }
+                });
                 const addressers = (await addresser).data;
-                let html = homeTemplate({apps: apps, addressers: addressers});
+                const app = (await sp).data;
+                const notification = (await noti).data;
+                let html = homeTemplate({apps: app, addressers: addressers, notifications: notification});
                 el.html(html);
                 $('.ui.accordion')
                     .accordion()
@@ -142,9 +147,35 @@ window.addEventListener('load', () => {
         }
     });
 
-    router.add('/notification', () => {
+    router.add('/notification', async () => {
         let html = notificationTemplate();
         el.html(html);
+
+        const user = getUser();
+
+        if(user) {
+            try {
+                // Load Service Provider
+                const response = await api.get("/addresser/getAll", {
+                    params: {
+                        token: getToken()
+                    }
+                });
+                const addresser = response.data;
+                let html = notificationTemplate({addressers: addresser});
+                el.html(html);
+
+                await overwriteCreateNotificationForm(api, showError);
+
+            } catch (e) {
+                showError("Error", "An unexpected error occurred");
+            }
+        } else{
+            document.getElementById("CreateNotification").disabled = true;
+            const field = document.getElementById("errorCreateNotification");
+            field.style.color = "red";
+            field.textContent = "Please login";
+        }
     });
 
     router.add('/user', async () => {
