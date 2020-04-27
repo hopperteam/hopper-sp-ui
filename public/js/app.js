@@ -75,13 +75,32 @@ window.addEventListener('load', () => {
         ;
 
         if(user) {
-            await overwriteCreateSpForm(api, showError);
+            try {
+                // Load Service Provider
+                const response = await api.get("/sp/getAll", {
+                    params: {
+                        token: getToken()
+                    }
+                });
+                const apps = response.data;
+                let html = spTemplate({apps: apps});
+                el.html(html);
+                $('.ui.accordion')
+                    .accordion()
+                ;
+                await overwriteCreateSpForm(api, showError);
+                await overwriteUpdateSpForm(api, showError);
+            } catch (e) {
+                showError("Error", "An unexpected error occurred");
+            }
         } else{
             document.getElementById("CreateSp").disabled = true;
             const field = document.getElementById("errorCreateSp");
             field.style.color = "red";
             field.textContent = "Please login";
         }
+
+        $('.loading').removeClass('loading');
     });
 
     router.add('/addresser', () => {
@@ -171,4 +190,16 @@ function getToken(){
 
 function setToken(token) {
     return localStorage.setItem("userToken", token);
+}
+
+function updateSp(id, name, imageUrl, manageUrl, contactEmail, isHidden){
+    const form = document.getElementById("formUpdateSp");
+    document.getElementById("UpdateSp").disabled = false;
+    form.scrollIntoView();
+    form.elements.id.value = id;
+    form.elements.name.value = name;
+    form.elements.imageUrl.value = imageUrl;
+    form.elements.manageUrl.value = manageUrl;
+    form.elements.contactEmail.value = contactEmail;
+    form.elements.isHidden.checked = isHidden;
 }

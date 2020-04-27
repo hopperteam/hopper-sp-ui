@@ -146,11 +146,75 @@
             Update
         </div>
         <div class="content">
-            <form id="formSignIn">
-                Email: <input name="email" type="text" value="" required> <br>
-                Password: <input name="password" type="password" value="" required> <br>
-                <input type="submit" value="Sign In">
-                <p id="errorSignIn"></p>
+            <div class="ui loading basic segment">
+                <table class="ui celled striped selectable inverted table">
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>name</th>
+                        <th>imageUrl</th>
+                        <th>isHidden</th>
+                        <th>baseUrl</th>
+                        <th>manageUrl</th>
+                        <th>contactEmail</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each apps}}
+                        <tr>
+                            <td>{{this.id}}</td>
+                            <td>{{this.name}}</td>
+                            <td>{{this.imageUrl}}</td>
+                            <td>{{this.isHidden}}</td>
+                            <td>{{this.baseUrl}}</td>
+                            <td>{{this.manageUrl}}</td>
+                            <td>{{this.contactEmail}}</td>
+                            <td>
+                                <button class="ui button" onclick="updateSp('{{this.id}}', '{{this.name}}',
+                                    '{{this.imageUrl}}', '{{this.manageUrl}}',
+                                    '{{this.contactEmail}}', {{this.isHidden}})">Update</button>
+                            </td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <form class="ui form" id="formUpdateSp">
+                <div class="field">
+                    <label>Id</label>
+                    <input name="id" type="text" disabled>
+                </div>
+                <div class="field">
+                    <label>Name</label>
+                    <input name="name" type="text" placeholder="Name">
+                </div>
+                <div class="field">
+                    <label>Image Url</label>
+                    <input name="imageUrl" type="text" placeholder="Image Url">
+                </div>
+                <div class="field">
+                    <label>Manage Url</label>
+                    <input name="manageUrl" type="text" placeholder="Manage Url">
+                </div>
+                <div class="field">
+                    <label>Contact Email</label>
+                    <input name="contactEmail" type="text" placeholder="Contact Email">
+                </div>
+                <div class="inline field">
+                    <div class="ui toggle checkbox">
+                        <input name="isHidden" type="checkbox">
+                        <label>Is Hidden</label>
+                    </div>
+                </div>
+                <div class="inline field">
+                    <div class="ui toggle checkbox">
+                        <input name="newCert" type="checkbox">
+                        <label>New Certificate</label>
+                    </div>
+                </div>
+                <button class="ui button" disabled id="UpdateSp" type="submit">Submit</button>
+                <p id="errorUpdateSp"></p>
             </form>
         </div>
     </div>
