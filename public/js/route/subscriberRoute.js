@@ -1,5 +1,5 @@
-async function addresserRoute(el, addresserTemplate, api, showError) {
-    let html = addresserTemplate();
+async function subscriberRoute(el, subscriberTemplate, api, showError) {
+    let html = subscriberTemplate();
     el.html(html);
 
     const user = getUser();
@@ -13,17 +13,17 @@ async function addresserRoute(el, addresserTemplate, api, showError) {
                 }
             });
             const apps = response.data;
-            let html = addresserTemplate({apps: apps});
+            let html = subscriberTemplate({apps: apps});
             el.html(html);
 
-            await overwriteCreateAddresserForm(api, showError);
+            await overwriteCreateSubscriberForm(api, showError);
 
         } catch (e) {
             showError("Error", "An unexpected error occurred");
         }
     } else{
-        document.getElementById("CreateAddresser").disabled = true;
-        const field = document.getElementById("errorCreateAddresser");
+        document.getElementById("CreateSubscriber").disabled = true;
+        const field = document.getElementById("errorCreateSubscriber");
         field.style.color = "red";
         field.textContent = "Please login";
     }

@@ -4,7 +4,7 @@ async function overwriteCreateNotificationForm(api, showError) {
     form.onsubmit = async function () {
         event.preventDefault();
         const body = {
-            addresserId: form.elements.addresserId.value,
+            subscriberId: form.elements.subscriberId.value,
             heading: form.elements.heading.value,
             imageUrl: form.elements.imageUrl.value,
             type: form.elements.type.value,

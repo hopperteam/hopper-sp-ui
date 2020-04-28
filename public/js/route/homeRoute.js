@@ -9,7 +9,7 @@ async function homeRoute(el, homeTemplate, api, showError) {
         try {
             // Load Service Provider
             // do all request and then wait
-            let addresser = api.get("/addresser/getAll", {
+            let subscriber = api.get("/subscriber/getAll", {
                 params: {
                     token: getToken()
                 }
@@ -24,10 +24,10 @@ async function homeRoute(el, homeTemplate, api, showError) {
                     token: getToken()
                 }
             });
-            const addressers = (await addresser).data;
+            const subscribers = (await subscriber).data;
             const app = (await sp).data;
             const notification = (await noti).data;
-            let html = homeTemplate({apps: app, addressers: addressers, notifications: notification});
+            let html = homeTemplate({apps: app, subscribers: subscribers, notifications: notification});
             el.html(html);
             $('.ui.accordion')
                 .accordion()

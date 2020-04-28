@@ -2,7 +2,7 @@ require('dotenv').config(); // read .env files
 const express = require('express');
 const {UserHandler} = require("./lib/handler/userHandler");
 const {SpHandler} = require("./lib/handler/spHandler");
-const {AddresserHandler} = require("./lib/handler/addresserHandler");
+const {SubscriberHandler} = require("./lib/handler/subscriberHandler");
 const {NotificationHandler} = require("./lib/handler/notiHandler");
 const bodyParser = require('body-parser');
 
@@ -28,7 +28,7 @@ app.use('/scripts', express.static(`${__dirname}/node_modules/`));
 // Use custom routers
 app.use(new UserHandler().getRouter());
 app.use(new SpHandler().getRouter());
-app.use(new AddresserHandler().getRouter());
+app.use(new SubscriberHandler().getRouter());
 app.use(new NotificationHandler().getRouter());
 
 // Redirect all traffic to index.html

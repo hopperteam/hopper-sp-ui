@@ -18,8 +18,8 @@
         <a class="item" id="sp" href="/sp">
             Service Providers
         </a>
-        <a class="item" id="ad" href="/addresser">
-            Addressers
+        <a class="item" id="ad" href="/subscriber">
+            Subscribers
         </a>
         <a class="item" id="nt" href="/notification">
             Notifications
@@ -44,11 +44,11 @@
 <script src="js/overwrite/signIn.js"></script>
 <script src="js/overwrite/signUp.js"></script>
 <script src="js/overwrite/sp.js"></script>
-<script src="js/overwrite/addresser.js"></script>
+<script src="js/overwrite/subscriber.js"></script>
 <script src="js/overwrite/notification.js"></script>
 <script src="js/route/homeRoute.js"></script>
 <script src="js/route/spRoute.js"></script>
-<script src="js/route/addresserRoute.js"></script>
+<script src="js/route/subscriberRoute.js"></script>
 <script src="js/route/notificationRoute.js"></script>
 <script src="js/route/userRoute.js"></script>
 
@@ -109,7 +109,7 @@
     <div class="ui styled fluid accordion">
         <div class="active title">
             <i class="dropdown icon"></i>
-            Addresser
+            Subscriber
         </div>
         <div class="active content">
             <div class="ui loading basic segment">
@@ -122,7 +122,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {{#each addressers}}
+                    {{#each subscribers}}
                         <tr>
                             <td>{{this.id}}</td>
                             <td>{{this.accountName}}</td>
@@ -153,7 +153,7 @@
                         <th>isSilent</th>
                         <th>isArchived</th>
                         <th>content</th>
-                        <th>addresserAccountName</th>
+                        <th>subscriberAccountName</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -168,7 +168,7 @@
                             <td>{{this.isSilent}}</td>
                             <td>{{this.isArchived}}</td>
                             <td>{{this.content}}</td>
-                            <td>{{this.addresser.accountName}}</td>
+                            <td>{{this.subscriber.accountName}}</td>
                         </tr>
                     {{/each}}
                     </tbody>
@@ -295,9 +295,9 @@
     </div>
 </script>
 
-<!-- Addresser Template -->
-<script id="addresser-template" type="text/x-handlebars-template">
-    <h1 class="ui header">Addressers</h1>
+<!-- Subscriber Template -->
+<script id="subscriber-template" type="text/x-handlebars-template">
+    <h1 class="ui header">Subscribers</h1>
     <hr>
     <div class="ui styled fluid accordion">
         <div class="active title">
@@ -305,7 +305,7 @@
             Create
         </div>
         <div class="active content">
-            <form class="ui form" id="formCreateAddresser">
+            <form class="ui form" id="formCreateSubscriber">
                 <div class="field">
                     <label>Account Name</label>
                     <input name="accountName" type="text" placeholder="Account Name" required>
@@ -321,8 +321,8 @@
                     </select>
                 </div>
 
-                <button class="ui button" id="CreateAddresser" type="submit">Submit</button>
-                <p id="errorCreateAddresser"></p>
+                <button class="ui button" id="CreateSubscriber" type="submit">Submit</button>
+                <p id="errorCreateSubscriber"></p>
             </form>
         </div>
     </div>
@@ -340,10 +340,10 @@
         <div class="active content">
             <form class="ui form" id="formCreateNotification">
                 <div class="field">
-                    <label>Addresser</label>
-                    <select name="addresserId" class="ui fluid dropdown">
+                    <label>Subscriber</label>
+                    <select name="subscriberId" class="ui fluid dropdown">
                         <option value=""></option>
-                        {{#each addressers}}
+                        {{#each subscribers}}
                             <option value="{{this.id}}">{{this.accountName}}</option>
                         {{/each}}
                     </select>

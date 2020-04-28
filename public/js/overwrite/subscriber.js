@@ -1,6 +1,6 @@
-async function overwriteCreateAddresserForm(api, showError) {
+async function overwriteCreateSubscriberForm(api, showError) {
     // overwrite default submit behavior
-    const form = document.getElementById("formCreateAddresser");
+    const form = document.getElementById("formCreateSubscriber");
     form.onsubmit = async function () {
         event.preventDefault();
         const body = {
@@ -8,7 +8,7 @@ async function overwriteCreateAddresserForm(api, showError) {
             appId: form.elements.appId.value
         };
 
-        const response = await api.post("/addresser/create", body, {
+        const response = await api.post("/subscriber/create", body, {
             params: {
                 token: getToken()
             }
@@ -18,7 +18,7 @@ async function overwriteCreateAddresserForm(api, showError) {
             if (status.localeCompare("success") == 0) {
                 location.replace(response.data.redirect);
             } else {
-                const field = document.getElementById("errorCreateAddresser");
+                const field = document.getElementById("errorCreateSubscriber");
                 field.style.color = "red";
                 field.textContent = response.data.reason.toString();
             }

@@ -5,7 +5,7 @@ window.addEventListener('load', () => {
     const errorTemplate = Handlebars.compile($('#error-template').html());
     const homeTemplate = Handlebars.compile($('#overview-template').html());
     const spTemplate = Handlebars.compile($('#sp-template').html());
-    const addresserTemplate = Handlebars.compile($('#addresser-template').html());
+    const subscriberTemplate = Handlebars.compile($('#subscriber-template').html());
     const notificationTemplate = Handlebars.compile($('#notification-template').html());
     const loginTemplate = Handlebars.compile($('#login-template').html());
     const logoutTemplate = Handlebars.compile($('#logout-template').html());
@@ -42,8 +42,8 @@ window.addEventListener('load', () => {
         spRoute(el, spTemplate, api, showError);
     });
 
-    router.add('/addresser', async () => {
-        addresserRoute(el, addresserTemplate, api, showError);
+    router.add('/subscriber', async () => {
+        subscriberRoute(el, subscriberTemplate, api, showError);
     });
 
     router.add('/notification', async () => {
