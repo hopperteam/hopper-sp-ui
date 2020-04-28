@@ -35,168 +35,23 @@ window.addEventListener('load', () => {
     };
 
     router.add('/', async () => {
-        let html = homeTemplate();
-        el.html(html);
-        $('.ui.accordion')
-            .accordion()
-        ;
-
-        if(getUser()){
-            try {
-                // Load Service Provider
-                // do all request and then wait
-                let addresser = api.get("/addresser/getAll", {
-                    params: {
-                        token: getToken()
-                    }
-                });
-                let sp = api.get("/sp/getAll", {
-                    params: {
-                        token: getToken()
-                    }
-                });
-                let noti = api.get("/notification/getAll", {
-                    params: {
-                        token: getToken()
-                    }
-                });
-                const addressers = (await addresser).data;
-                const app = (await sp).data;
-                const notification = (await noti).data;
-                let html = homeTemplate({apps: app, addressers: addressers, notifications: notification});
-                el.html(html);
-                $('.ui.accordion')
-                    .accordion()
-                ;
-            } catch (e) {
-                showError("Error", "An unexpected error occurred");
-            }
-        }
-
-        $('.loading').removeClass('loading');
+        homeRoute(el, homeTemplate, api, showError);
     });
 
     router.add('/sp', async () => {
-        let html = spTemplate();
-        el.html(html);
-
-        const user = getUser();
-
-        $('.ui.accordion')
-            .accordion()
-        ;
-
-        if(user) {
-            try {
-                // Load Service Provider
-                const response = await api.get("/sp/getAll", {
-                    params: {
-                        token: getToken()
-                    }
-                });
-                const apps = response.data;
-                let html = spTemplate({apps: apps});
-                el.html(html);
-                $('.ui.accordion')
-                    .accordion()
-                ;
-                await overwriteCreateSpForm(api, showError);
-                await overwriteUpdateSpForm(api, showError);
-            } catch (e) {
-                showError("Error", "An unexpected error occurred");
-            }
-        } else{
-            document.getElementById("CreateSp").disabled = true;
-            const field = document.getElementById("errorCreateSp");
-            field.style.color = "red";
-            field.textContent = "Please login";
-        }
-
-        $('.loading').removeClass('loading');
+        spRoute(el, spTemplate, api, showError);
     });
 
     router.add('/addresser', async () => {
-        let html = addresserTemplate();
-        el.html(html);
-
-        const user = getUser();
-
-        if(user) {
-            try {
-                // Load Service Provider
-                const response = await api.get("/sp/getAll", {
-                    params: {
-                        token: getToken()
-                    }
-                });
-                const apps = response.data;
-                let html = addresserTemplate({apps: apps});
-                el.html(html);
-
-                await overwriteCreateAddresserForm(api, showError);
-
-            } catch (e) {
-                showError("Error", "An unexpected error occurred");
-            }
-        } else{
-            document.getElementById("CreateAddresser").disabled = true;
-            const field = document.getElementById("errorCreateAddresser");
-            field.style.color = "red";
-            field.textContent = "Please login";
-        }
+        addresserRoute(el, addresserTemplate, api, showError);
     });
 
     router.add('/notification', async () => {
-        let html = notificationTemplate();
-        el.html(html);
-
-        const user = getUser();
-
-        if(user) {
-            try {
-                // Load Service Provider
-                const response = await api.get("/addresser/getAll", {
-                    params: {
-                        token: getToken()
-                    }
-                });
-                const addresser = response.data;
-                let html = notificationTemplate({addressers: addresser});
-                el.html(html);
-
-                await overwriteCreateNotificationForm(api, showError);
-
-            } catch (e) {
-                showError("Error", "An unexpected error occurred");
-            }
-        } else{
-            document.getElementById("CreateNotification").disabled = true;
-            const field = document.getElementById("errorCreateNotification");
-            field.style.color = "red";
-            field.textContent = "Please login";
-        }
+        notificationRoute(el, notificationTemplate, api, showError);
     });
 
     router.add('/user', async () => {
-        //check if logged in or not
-        const user = getUser();
-        let html;
-
-        if(user) {
-            html = logoutTemplate({user: getUser()});
-        } else {
-            html = loginTemplate();
-        }
-
-        el.html(html);
-
-        if(!user) {
-            $('.ui.accordion')
-                .accordion()
-            ;
-            await overwriteSignInForm(api, showError);
-            await overwriteSignUpForm(api, showError);
-        }
+        userRoute(el, logoutTemplate, loginTemplate, api, showError);
     });
 
     // Navigate app to current url
