@@ -7,7 +7,11 @@ const {NotificationHandler} = require("./lib/notiHandler");
 const bodyParser = require('body-parser');
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT;
+if(!port){
+    console.log("Missing PORT in environment definition");
+    return;
+}
 
 // Set public folder as root
 app.use(express.static('public'));
@@ -26,7 +30,7 @@ app.use(new NotificationHandler().getRouter());
 // Redirect all traffic to index.html
 app.use((req, res) => res.sendFile(`${__dirname}/public/index.html`));
 
-// Listen for HTTP requests on port 3001
+// Listen for HTTP requests
 app.listen(port, () => {
     console.log('listening on %d', port);
 });

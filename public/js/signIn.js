@@ -7,7 +7,6 @@ async function overwriteSignInForm(api) {
             email: form.elements.email.value,
             password: form.elements.password.value
         };
-
         const response = await api.post("/user/signIn", body);
         try {
             const status = response.data.status.toString();

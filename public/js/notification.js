@@ -13,14 +13,13 @@ async function overwriteCreateNotificationForm(api, showError) {
             isArchived: form.elements.isArchived.checked,
             content: form.elements.content.value
         };
-        console.log(body);
 
         const response = await api.post("/notification/create", body, {
             params: {
                 token: getToken()
             }
         });
-        console.log(response);
+
         try {
             const status = response.data.status.toString();
             if (status.localeCompare("success") == 0) {

@@ -14,7 +14,6 @@ async function overwriteCreateAddresserForm(api, showError) {
             }
         });
         try {
-            console.log(response);
             const status = response.data.status.toString();
             if (status.localeCompare("success") == 0) {
                 location.replace(response.data.redirect);
