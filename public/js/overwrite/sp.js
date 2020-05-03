@@ -11,6 +11,11 @@ async function overwriteCreateSpForm(api, showError) {
             isHidden: form.elements.isHidden.checked
         };
 
+        // don't send if null
+        if(!body.manageUrl){
+            delete body.manageUrl;
+        }
+
         const response = await api.post("/sp/create", body, {
             params: {
                 token: getToken()
