@@ -1,4 +1,3 @@
-require('dotenv').config(); // read .env files
 const express = require('express');
 const {UserHandler} = require("./lib/handler/userHandler");
 const {SpHandler} = require("./lib/handler/spHandler");
