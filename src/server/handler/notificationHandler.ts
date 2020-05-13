@@ -1,7 +1,8 @@
-const {Handler} = require("./handler");
-const {getAll, create} = require("../service/notiService");
+import Handler from './handler';
+import express from 'express';
+import * as utils from './../api/utils';
 
-class NotificationHandler extends Handler {
+export default class NotificationHandler extends Handler {
 
     constructor() {
         super();
@@ -9,9 +10,9 @@ class NotificationHandler extends Handler {
         this.getRouter().post("/notification/create", this.createNotification.bind(this));
     }
 
-    async getAll(req, res) {
+    private async getAll(req: express.Request, res: express.Response): Promise<void> {
         try {
-            const data = await getAll(req.query.token);
+            const data = await utils.getWithToken( '/notifications', req.query.token.toString());
             res.setHeader('Content-Type', 'application/json');
             res.send(data);
         } catch (error) {
@@ -20,9 +21,9 @@ class NotificationHandler extends Handler {
         }
     }
 
-    async createNotification(req, res) {
+    private async createNotification(req: express.Request, res: express.Response): Promise<void> {
         try {
-            const data = await create(req.body, req.query.token);
+            const data = await utils.postWithToken( '/notification', req.body, req.query.token.toString());
             res.setHeader('Content-Type', 'application/json');
             res.send(data);
         } catch (error) {
@@ -31,7 +32,3 @@ class NotificationHandler extends Handler {
         }
     }
 }
-
-module.exports = {
-    NotificationHandler
-};

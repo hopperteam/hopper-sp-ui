@@ -1,7 +1,8 @@
-const {Handler} = require("./handler");
-const {getAll, create, approve} = require("../service/subscriberService")
+import Handler from "./handler";
+import express from "express";
+import * as utils from "../api/utils";
 
-class SubscriberHandler extends Handler {
+export default class SubscriberHandler extends Handler {
 
     constructor() {
         super();
@@ -10,9 +11,9 @@ class SubscriberHandler extends Handler {
         this.getRouter().get("/subscriber/approve", this.approveSubscriber.bind(this));
     }
 
-    async getAll(req, res) {
+    private async getAll(req: express.Request, res: express.Response): Promise<void> {
         try {
-            const data = await getAll(req.query.token);
+            const data = await utils.getWithToken('/subscribers', req.query.token.toString());
             res.setHeader('Content-Type', 'application/json');
             res.send(data);
         } catch (error) {
@@ -21,9 +22,9 @@ class SubscriberHandler extends Handler {
         }
     }
 
-    async createSubscriber(req, res) {
+    private async createSubscriber(req: express.Request, res: express.Response): Promise<void> {
         try {
-            const data = await create(req.body, req.query.token);
+            const data = await utils.postWithToken('/subscriber', req.body, req.query.token.toString());
             res.setHeader('Content-Type', 'application/json');
             res.send(data);
         } catch (error) {
@@ -32,15 +33,15 @@ class SubscriberHandler extends Handler {
         }
     }
 
-    async approveSubscriber(req, res) {
+    private async approveSubscriber(req: express.Request, res: express.Response): Promise<void> {
         try {
-            if(req.query.status.toString().localeCompare("success") == 0){
+            if(!req.query.status.toString().localeCompare("success")){
                 const body = {
                     systemId: req.query.internalId,
                     id: req.query.id
                 };
-                const data = await approve(body, req.query.token);
-                if(data.status.toString().localeCompare("success") == 0){
+                const data = await utils.putWithToken( '/subscriber',body, req.query.token.toString());
+                if(!data.status.toString().localeCompare("success")){
                     res.redirect("/");
                 } else{
                     res.setHeader('Content-Type', 'application/json');
@@ -55,8 +56,4 @@ class SubscriberHandler extends Handler {
             res.send(error);
         }
     }
-}
-
-module.exports = {
-    SubscriberHandler: SubscriberHandler
 }

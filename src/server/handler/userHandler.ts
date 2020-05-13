@@ -1,7 +1,8 @@
-const {Handler} = require("./handler");
-const {signIn, signUp} = require('../service/userService');
+import Handler from "./handler";
+import express from "express";
+import * as utils from "../api/utils";
 
-class UserHandler extends Handler {
+export default class UserHandler extends Handler {
 
     constructor() {
         super();
@@ -9,13 +10,9 @@ class UserHandler extends Handler {
         this.getRouter().post("/user/signUp", this.signUp.bind(this));
     }
 
-    getRouter(){
-        return this.router;
-    }
-
-    async signIn(req, res) {
+    private async signIn(req: express.Request, res: express.Response): Promise<void> {
         try {
-            const data = await signIn(req.body);
+            const data = await utils.post('/signIn', req.body);
             res.setHeader('Content-Type', 'application/json');
             res.send(data);
         } catch (error) {
@@ -24,9 +21,9 @@ class UserHandler extends Handler {
         }
     }
 
-    async signUp(req, res) {
+    private async signUp(req: express.Request, res: express.Response): Promise<void> {
         try {
-            const data = await signUp(req.body);
+            const data = await utils.post('/signUp', req.body);
             res.setHeader('Content-Type', 'application/json');
             res.send(data);
         } catch (error) {
@@ -35,7 +32,3 @@ class UserHandler extends Handler {
         }
     }
 }
-
-module.exports = {
-    UserHandler
-};

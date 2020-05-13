@@ -1,3 +1,7 @@
-node_modules
-.env
+*/**/node_modules/
+node_modules/
 .idea/
+.build/
+tslint.json
+.env
+package-lock.json
