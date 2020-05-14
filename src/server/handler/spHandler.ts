@@ -1,22 +1,19 @@
-const {Handler} = require("./handler");
-const {getAll, create, update} = require('../service/spService');
+import Handler from "./handler";
+import express from "express";
+import * as utils from "../api/utils";
 
-class SpHandler extends Handler {
+export default class SpHandler extends Handler {
 
     constructor() {
         super();
         this.getRouter().get("/sp/getAll", this.getAll.bind(this));
-        this.getRouter().post("/sp/create", this.createSP.bind(this));
+        this.getRouter().post("/sp/create", this.createSp.bind(this));
         this.getRouter().put("/sp/update", this.updateSp.bind(this));
     }
 
-    getRouter(){
-        return this.router;
-    }
-
-    async getAll(req, res) {
+    private async getAll(req: express.Request, res: express.Response): Promise<void> {
         try {
-            const data = await getAll(req.query.token);
+            const data = await utils.getWithToken('/apps', req.query.token.toString());
             res.setHeader('Content-Type', 'application/json');
             res.send(data);
         } catch (error) {
@@ -25,9 +22,9 @@ class SpHandler extends Handler {
         }
     }
 
-    async createSP(req, res) {
+    private async createSp(req: express.Request, res: express.Response): Promise<void> {
         try {
-            const data = await create(req.body, req.query.token);
+            const data = await utils.postWithToken('/app', req.body, req.query.token.toString());
             res.setHeader('Content-Type', 'application/json');
             res.send(data);
         } catch (error) {
@@ -36,9 +33,9 @@ class SpHandler extends Handler {
         }
     }
 
-    async updateSp(req, res) {
+    private async updateSp(req: express.Request, res: express.Response): Promise<void> {
         try {
-            const data = await update(req.body, req.query.token);
+            const data = await utils.putWithToken('/app', req.body, req.query.token.toString());
             res.setHeader('Content-Type', 'application/json');
             res.send(data);
         } catch (error) {
@@ -47,7 +44,3 @@ class SpHandler extends Handler {
         }
     }
 }
-
-module.exports = {
-    SpHandler
-};
