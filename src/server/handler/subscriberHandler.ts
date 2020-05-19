@@ -59,7 +59,7 @@ export default class SubscriberHandler extends Handler {
             } else{
                 console.log(req.query.status);
                 console.log(req.query.error);
-                res.redirect("/");
+                res.redirect("/subscribe");
             }
         } catch (e) {
             utils.handleError(e, res);
