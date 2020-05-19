@@ -25,7 +25,7 @@ window.addEventListener('load', () => {
 
     // Instantiate api handler
     const api = axios.create({
-        timeout: 5000,
+        timeout: 5000
     });
 
     // Display Error Banner

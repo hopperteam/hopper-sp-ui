@@ -8,7 +8,7 @@ async function overwriteSignUpForm(api, showError) {
             password: form.elements.password.value
         };
 
-        const response = await api.post("/user/signUp", body);
+        const response = await api.post("/signUp", body);
         try {
             const status = response.data.status.toString();
             if(status.localeCompare("success") == 0){

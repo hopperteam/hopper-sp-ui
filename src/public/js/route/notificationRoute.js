@@ -7,7 +7,7 @@ async function notificationRoute(el, notificationTemplate, api, showError) {
     if(user) {
         try {
             // Load Service Provider
-            const response = await api.get("/subscriber/getAll", {
+            const response = await api.get("/subscribers", {
                 params: {
                     token: getToken()
                 }
