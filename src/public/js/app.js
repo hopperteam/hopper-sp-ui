@@ -42,7 +42,7 @@ window.addEventListener('load', () => {
         spRoute(el, spTemplate, api, showError);
     });
 
-    router.add('/subscriber', async () => {
+    router.add('/subscribe', async () => {
         subscriberRoute(el, subscriberTemplate, api, showError);
     });
 

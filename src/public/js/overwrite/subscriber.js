@@ -13,6 +13,7 @@ async function overwriteCreateSubscriberForm(api, showError) {
                 token: getToken()
             }
         });
+
         try {
             const status = response.data.status.toString();
             if (status.localeCompare("success") == 0) {
