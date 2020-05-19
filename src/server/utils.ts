@@ -6,7 +6,7 @@ const SALT = "TL]{~eeo=u8J>j>@th8Psh4FQZ:^Wz)UMi;/vXst";
 
 export function handleError(err: Error, res: express.Response, statusCode: number = 400) {
     console.log(err.message);
-    // res.status(statusCode);
+    // pass error to frontend
     res.setHeader('Content-Type', 'application/json');
     res.json({
         "status": "error",
