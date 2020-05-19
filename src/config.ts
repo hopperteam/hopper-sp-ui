@@ -3,7 +3,6 @@ export namespace Config {
         const data: any = {};
         const status: any = {status: false};
         data.port = getEnv(process.env.PORT, "PORT", status);
-        data.backendUrl = getEnv(process.env.BACKENDURL, "BACKENDURL", status);
         data.mongoUri = getEnv(process.env.MONGOURI, "MONGOURI", status);
         data.passphrase = getEnv(process.env.PASSPHRASE, "PASSPHRASE", status);
         data.baseUrl = getEnv(process.env.BASEURL, "BASEURL", status);
@@ -19,7 +18,6 @@ export namespace Config {
 
     class ConfigHolder {
         readonly port: number;
-        readonly backendUrl: string;
         readonly mongoUri: string;
         readonly passphrase: string;
         readonly baseUrl: string;
@@ -30,7 +28,6 @@ export namespace Config {
 
         constructor(data: any) {
             this.port = data.port;
-            this.backendUrl = data.backendUrl;
             this.mongoUri = data.mongoUri;
             this.passphrase = data.passphrase;
             this.baseUrl = data.baseUrl;
