@@ -1,23 +1,23 @@
-window.addEventListener('load', () => {
-    const el = $('#app');
+window.addEventListener("load", () => {
+    const el = $("#app");
 
     // Compile Handlebar Templates
-    const errorTemplate = Handlebars.compile($('#error-template').html());
-    const homeTemplate = Handlebars.compile($('#overview-template').html());
-    const spTemplate = Handlebars.compile($('#sp-template').html());
-    const subscriberTemplate = Handlebars.compile($('#subscriber-template').html());
-    const notificationTemplate = Handlebars.compile($('#notification-template').html());
-    const loginTemplate = Handlebars.compile($('#login-template').html());
-    const logoutTemplate = Handlebars.compile($('#logout-template').html());
+    const errorTemplate = Handlebars.compile($("#error-template").html());
+    const homeTemplate = Handlebars.compile($("#overview-template").html());
+    const spTemplate = Handlebars.compile($("#sp-template").html());
+    const subscriberTemplate = Handlebars.compile($("#subscriber-template").html());
+    const notificationTemplate = Handlebars.compile($("#notification-template").html());
+    const loginTemplate = Handlebars.compile($("#login-template").html());
+    const logoutTemplate = Handlebars.compile($("#logout-template").html());
 
     // Handler Declaration
     const router = new Router({
-        mode: 'history',
+        mode: "history",
         page404: (path) => {
             const html = errorTemplate({
-                color: 'yellow',
-                title: 'Error 404 - Page NOT Found!',
-                message: `The path '/${path}' does not exist on this site`,
+                color: "yellow",
+                title: "Error 404 - Page NOT Found!",
+                message: `The path "/${path}" does not exist on this site`,
             });
             el.html(html);
         },
@@ -30,27 +30,27 @@ window.addEventListener('load', () => {
 
     // Display Error Banner
     const showError = (title, message) => {
-        const html = errorTemplate({ color: 'red', title, message });
+        const html = errorTemplate({ color: "red", title, message });
         el.html(html);
     };
 
-    router.add('/', async () => {
+    router.add("/", async () => {
         homeRoute(el, homeTemplate, api, showError);
     });
 
-    router.add('/sp', async () => {
+    router.add("/sp", async () => {
         spRoute(el, spTemplate, api, showError);
     });
 
-    router.add('/subscribe', async () => {
+    router.add("/subscribe", async () => {
         subscriberRoute(el, subscriberTemplate, api, showError);
     });
 
-    router.add('/notification', async () => {
+    router.add("/notification", async () => {
         notificationRoute(el, notificationTemplate, api, showError);
     });
 
-    router.add('/user', async () => {
+    router.add("/user", async () => {
         userRoute(el, logoutTemplate, loginTemplate, api, showError);
     });
 
@@ -58,21 +58,21 @@ window.addEventListener('load', () => {
     router.navigateTo(window.location.pathname);
 
     // Highlight Active Menu on Refresh/Page Reload
-    const link = $(`a[href$='${window.location.pathname}']`);
-    link.addClass('active');
+    const link = $(`a[href$="${window.location.pathname}"]`);
+    link.addClass("active");
 
-    $('a').on('click', (event) => {
+    $("a").on("click", (event) => {
         // Block browser page load
         event.preventDefault();
 
         // Highlight Active Menu on Click
         const target = $(event.target);
-        $('.item').removeClass('active');
-        target.addClass('active');
+        $(".item").removeClass("active");
+        target.addClass("active");
 
         // Navigate to clicked url
-        const href = target.attr('href');
-        const path = href.substr(href.lastIndexOf('/'));
+        const href = target.attr("href");
+        const path = href.substr(href.lastIndexOf("/"));
         router.navigateTo(path);
     });
 });
