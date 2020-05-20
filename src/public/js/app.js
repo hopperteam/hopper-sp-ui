@@ -1,3 +1,5 @@
+/*eslint no-undef: "Handlebars"*/
+
 window.addEventListener("load", () => {
     const el = $("#app");
 
