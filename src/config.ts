@@ -1,4 +1,13 @@
 export namespace Config {
+    function getEnv(key: any, name: string, status: any): any{
+        if(!key){
+            console.log("Missing " + name + " in environment definition");
+            status.status = true;
+        }
+
+        return key;
+    }
+
     export function loadConfig(): boolean{
         const data: any = {};
         const status: any = {status: false};
@@ -36,15 +45,6 @@ export namespace Config {
             this.redirectUrl = data.redirectUrl;
             this.notificationUrl = data.notificationUrl;
         }
-    }
-
-    function getEnv(key: any, name: string, status: any): any{
-        if(!key){
-            console.log("Missing " + name + " in environment definition");
-            status.status = true;
-        }
-
-        return key;
     }
 
     export let instance : ConfigHolder;
