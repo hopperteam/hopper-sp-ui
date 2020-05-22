@@ -1,4 +1,5 @@
 /*global Handlebars, axios*/
+/*eslint no-undef: "error"*/
 
 window.addEventListener("load", () => {
     const el = $("#app");
