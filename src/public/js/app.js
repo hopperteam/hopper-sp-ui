@@ -1,4 +1,5 @@
-/*global Handlebars, axios*/
+/*global Handlebars, axios,
+* homeRoute, spRoute, subscribeRoute, notificationRoute, userRoute*/
 /*eslint no-undef: "error"*/
 
 window.addEventListener("load", () => {
