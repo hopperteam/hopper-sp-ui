@@ -1,4 +1,4 @@
-import * as mongoose from 'mongoose';
+import * as mongoose from "mongoose";
 
 export interface INotification extends mongoose.Document {
     id: string;
@@ -17,7 +17,7 @@ export interface INotification extends mongoose.Document {
 const NotificationSchema = new mongoose.Schema({
     id: { type: String, required: true},
     userId: { type: String, required: true, select: false, index: true },
-    subscriber: { type: mongoose.Schema.Types.ObjectId, ref: 'Subscriber', required: true },
+    subscriber: { type: mongoose.Schema.Types.ObjectId, ref: "Subscriber", required: true },
     heading: { type: String, required: true },
     timestamp: { type: Number, required: true },
     imageUrl: { type: String },
@@ -30,9 +30,9 @@ const NotificationSchema = new mongoose.Schema({
     versionKey: false
 });
 
-NotificationSchema.set('toJSON', {
+NotificationSchema.set("toJSON", {
     virtuals: true,
-    transform: function (doc, ret) { delete ret._id }
+    transform (doc, ret) { delete ret._id }
 });
 
 const Notification = mongoose.model<INotification>("Notification", NotificationSchema);

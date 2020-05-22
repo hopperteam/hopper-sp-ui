@@ -1,4 +1,4 @@
-import * as express from 'express';
+import * as express from "express";
 
 export default class Handler {
     private readonly router: express.Router;

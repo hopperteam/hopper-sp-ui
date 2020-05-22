@@ -1,4 +1,4 @@
-import * as mongoose from 'mongoose';
+import * as mongoose from "mongoose";
 
 interface IApp extends mongoose.Document {
     id: string;
@@ -30,9 +30,9 @@ const AppSchema = new mongoose.Schema({
     versionKey: false
 });
 
-AppSchema.set('toJSON', {
+AppSchema.set("toJSON", {
     virtuals: true,
-    transform: function (doc, ret) { delete ret._id }
+    transform (doc, ret) { delete ret._id }
 });
 
 const App = mongoose.model<IApp>("App", AppSchema);

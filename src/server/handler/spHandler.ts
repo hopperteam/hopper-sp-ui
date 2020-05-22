@@ -1,5 +1,5 @@
 import Handler from "./handler";
-import * as express from 'express';
+import * as express from "express";
 import App from "../types/app";
 import * as utils from "../utils";
 import * as appAPI from "../api/appAPI";
@@ -74,7 +74,7 @@ export default class SpHandler extends Handler {
         // create request object
         const requestObject = body;
         const {publicKey, privateKey} = utils.createRsaPair(passphrase);
-        const cert = Buffer.from(publicKey).toString('base64');
+        const cert = Buffer.from(publicKey).toString("base64");
         Object.assign(requestObject, {cert, baseUrl});
 
         // register sp at hopper server
@@ -92,7 +92,7 @@ export default class SpHandler extends Handler {
 
         if(update.newCert){
             const {publicKey, privateKey} = utils.createRsaPair(passphrase);
-            const cert = Buffer.from(publicKey).toString('base64');
+            const cert = Buffer.from(publicKey).toString("base64");
             Object.assign(app, {publicKey, privateKey, cert});
         }
 

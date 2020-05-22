@@ -3,7 +3,7 @@ import * as express from "express";
 import * as utils from "../utils";
 import Subscriber from "../types/subscriber";
 import App from "../types/app";
-import querystring from 'querystring';
+import querystring from "querystring";
 import * as subscriberAPI from "../api/subscriberAPI";
 import {Config} from "../../config";
 
@@ -18,7 +18,7 @@ export default class SubscriberHandler extends Handler {
 
     private async getAll(req: express.Request, res: express.Response): Promise<void> {
         try {
-            const subscriber = await Subscriber.find({userId: req.query.token}).populate('app');
+            const subscriber = await Subscriber.find({userId: req.query.token}).populate("app");
             res.json(subscriber);
         } catch (e) {
             utils.handleError(e, res);

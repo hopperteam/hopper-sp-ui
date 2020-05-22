@@ -1,4 +1,4 @@
-import request from 'request';
+import request from "request";
 
 export async function sendNotification(notification: object, url: string, subscriptionId: string): Promise<any>{
     return new Promise((resolve, reject) => {
@@ -8,7 +8,7 @@ export async function sendNotification(notification: object, url: string, subscr
                 throw new Error("Request to lead to error");
             }
             console.log(`statusCode: ${res.statusCode}`);
-            if (body.status === 'success'){
+            if (body.status === "success"){
                 resolve({status: "success", message: body.id});
             } else {
                 resolve({status: "error", message: body.reason});

@@ -1,7 +1,7 @@
-import * as express from 'express';
-import Handler from './handler';
-import User from '../types/user';
-import * as utils from '../utils';
+import * as express from "express";
+import Handler from "./handler";
+import User from "../types/user";
+import * as utils from "../utils";
 
 export default class UserHandler extends Handler {
 

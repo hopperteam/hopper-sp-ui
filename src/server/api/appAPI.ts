@@ -1,4 +1,4 @@
-import request from 'request';
+import request from "request";
 
 export function register(requestObject: object, url: string, serviceProvider: object): Promise<any>{
     return new Promise((resolve, reject) => {
@@ -8,7 +8,7 @@ export function register(requestObject: object, url: string, serviceProvider: ob
                 throw new Error("Request lead to error");
             }
             console.log(`statusCode: ${res.statusCode}`);
-            if (body.status === 'success'){
+            if (body.status === "success"){
                 Object.assign(serviceProvider, requestObject, {id: body.id});
                 resolve({status: "success", message: serviceProvider});
             } else {
@@ -27,7 +27,7 @@ export function updateRequest(url: string, id: string, requestStr: string): Prom
                 throw new Error("Request lead to error");
             }
             console.log(`statusCode: ${res.statusCode}`);
-            if (body.status === 'success'){
+            if (body.status === "success"){
                 resolve("success");
             } else {
                 resolve(body.reason);

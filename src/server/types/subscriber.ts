@@ -1,4 +1,4 @@
-import * as mongoose from 'mongoose';
+import * as mongoose from "mongoose";
 
 export interface ISubscriber extends mongoose.Document {
     id: string;
@@ -11,14 +11,14 @@ const SubscriberSchema = new mongoose.Schema({
     id: { type: String, default: "", index: true},
     userId: { type: String, required: true, select: false, index: true },
     accountName: { type: String },
-    app: { type: mongoose.Schema.Types.ObjectId, ref: 'App', required: true }
+    app: { type: mongoose.Schema.Types.ObjectId, ref: "App", required: true }
 }, {
     versionKey: false
 });
 
-SubscriberSchema.set('toJSON', {
+SubscriberSchema.set("toJSON", {
     virtuals: true,
-    transform: function (doc, ret) { delete ret._id }
+    transform (doc, ret) { delete ret._id }
 });
 
 const Subscriber = mongoose.model<ISubscriber>("Subscriber", SubscriberSchema);
