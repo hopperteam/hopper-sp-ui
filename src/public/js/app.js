@@ -1,4 +1,4 @@
-/*eslint no-undef: "Handlebars"*/
+/*global Handlebars, axios*/
 
 window.addEventListener("load", () => {
     const el = $("#app");
@@ -37,23 +37,23 @@ window.addEventListener("load", () => {
     };
 
     router.add("/", async () => {
-        homeRoute(el, homeTemplate, api, showError);
+        await homeRoute(el, homeTemplate, api, showError);
     });
 
     router.add("/sp", async () => {
-        spRoute(el, spTemplate, api, showError);
+        await spRoute(el, spTemplate, api, showError);
     });
 
     router.add("/subscribe", async () => {
-        subscriberRoute(el, subscriberTemplate, api, showError);
+        await subscriberRoute(el, subscriberTemplate, api, showError);
     });
 
     router.add("/notification", async () => {
-        notificationRoute(el, notificationTemplate, api, showError);
+        await notificationRoute(el, notificationTemplate, api, showError);
     });
 
     router.add("/user", async () => {
-        userRoute(el, logoutTemplate, loginTemplate, api, showError);
+        await userRoute(el, logoutTemplate, loginTemplate, api, showError);
     });
 
     // Navigate app to current url
