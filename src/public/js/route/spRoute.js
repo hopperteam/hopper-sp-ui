@@ -11,7 +11,7 @@ async function spRoute(el, spTemplate, api, showError) {
     if(user) {
         try {
             // Load Service Provider
-            const response = await api.get("/sp/getAll", {
+            const response = await api.get("/apps", {
                 params: {
                     token: getToken()
                 }

@@ -1,34 +1,42 @@
+import * as express from "express";
 import Handler from "./handler";
-import express from "express";
-import * as utils from "../api/utils";
+import User from "../types/user";
+import * as utils from "../utils";
 
 export default class UserHandler extends Handler {
 
     constructor() {
         super();
-        this.getRouter().post("/user/signIn", this.signIn.bind(this));
-        this.getRouter().post("/user/signUp", this.signUp.bind(this));
+        this.getRouter().post("/signUp", this.signUp.bind(this));
+        this.getRouter().post("/signIn", this.signIn.bind(this));
     }
 
-    private async signIn(req: express.Request, res: express.Response): Promise<void> {
+    private async signUp(req: express.Request, res: express. Response): Promise<void> {
         try {
-            const data = await utils.post('/signIn', req.body);
-            res.setHeader('Content-Type', 'application/json');
-            res.send(data);
-        } catch (error) {
-            res.setHeader('Content-Type', 'application/json');
-            res.send(error.response.data);
+            if (await User.findOne({ email: req.body.email }))
+                throw new Error("Email is already in use");
+            req.body.password = utils.hashPassword(req.body.password);
+            const user = await User.create(req.body);
+            res.json({
+                "status": "success",
+                "token": user._id
+            });
+        } catch (e) {
+            utils.handleError(e, res);
         }
     }
 
-    private async signUp(req: express.Request, res: express.Response): Promise<void> {
+    private async signIn(req: express.Request, res: express. Response): Promise<void> {
         try {
-            const data = await utils.post('/signUp', req.body);
-            res.setHeader('Content-Type', 'application/json');
-            res.send(data);
-        } catch (error) {
-            res.setHeader('Content-Type', 'application/json');
-            res.send(error.response.data);
+            const user = await User.findOne({ email: req.body.email, password: utils.hashPassword(req.body.password) });
+            if (!user)
+                throw new Error("Invalid login data");
+            res.json({
+                "status": "success",
+                "token": user._id
+            });
+        } catch (e) {
+            utils.handleError(e, res);
         }
     }
 }

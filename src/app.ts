@@ -1,7 +1,8 @@
-import express from 'express';
-import {Config} from './config';
-import bodyParser from 'body-parser';
-import path from 'path';
+import express from "express";
+import {Config} from "./config";
+import bodyParser from "body-parser";
+import path from "path";
+import mongoose from "mongoose";
 import NotificationHandler from "./server/handler/notificationHandler";
 import SpHandler from "./server/handler/spHandler";
 import SubscriberHandler from "./server/handler/subscriberHandler";
@@ -17,17 +18,32 @@ class SPServer {
             process.exit();
         }
 
-        // Use bodyparser
+        // Use body parser
         this.server.use(bodyParser.json());
     }
 
     public async start(): Promise<void> {
+        // Connect database
+        mongoose.connect(Config.instance.mongoUri, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            useCreateIndex: true,
+            useFindAndModify: false
+        }, (err: any) => {
+            if (err) {
+                console.log("Can not connect to database!");
+                console.log(err.message);
+            } else {
+                console.log("Successfully connected to database!");
+            }
+        });
+
         // Serve public folder
         this.server.use(express.static(
             path.resolve(`${__dirname}/public`)));
 
         // Allow front-end access to node_modules folder
-        this.server.use('/scripts', express.static(path.resolve(`${__dirname}/../node_modules/`)));
+        this.server.use("/scripts", express.static(path.resolve(`${__dirname}/../node_modules/`)));
 
         // Use custom routers
         this.server.use(new NotificationHandler().getRouter());

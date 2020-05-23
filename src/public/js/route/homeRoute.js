@@ -9,17 +9,17 @@ async function homeRoute(el, homeTemplate, api, showError) {
         try {
             // Load Service Provider
             // do all request and then wait
-            let subscriber = api.get("/subscriber/getAll", {
+            let subscriber = api.get("/subscribers", {
                 params: {
                     token: getToken()
                 }
             });
-            let sp = api.get("/sp/getAll", {
+            let sp = api.get("/apps", {
                 params: {
                     token: getToken()
                 }
             });
-            let noti = api.get("/notification/getAll", {
+            let noti = api.get("/notifications", {
                 params: {
                     token: getToken()
                 }
