@@ -4,11 +4,7 @@ async function notificationRoute(el, notificationTemplate, api, showError) {
 
     try {
         // Load Service Provider
-        const response = await api.get("/subscribers", {
-            params: {
-                token: getToken()
-            }
-        });
+        const response = await api.get("/subscribers");
         const subscriber = response.data;
         let html = notificationTemplate({subscribers: subscriber});
         el.html(html);

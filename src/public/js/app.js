@@ -51,16 +51,7 @@ window.addEventListener("load", async () => {
         el.html(html);
     };
 
-    async function getUser() {
-        try {
-            const response = await api.get("/user");
-            return response.data;
-        } catch (e) {
-            showError("Error", e);
-        }
-    }
-
-    const user = await getUser();
+    const user = await getUser(api, showError);
 
     document.getElementById("user").style.color = "black";
     document.getElementById("user").textContent = user.firstName + " " + user.lastName;
@@ -108,8 +99,13 @@ window.addEventListener("load", async () => {
     });
 });
 
-function getToken(){
-    return localStorage.getItem("userToken");
+async function getUser(api, showError) {
+    try {
+        const response = await api.get("/user");
+        return response.data;
+    } catch (e) {
+        showError("Error", e);
+    }
 }
 
 function updateSp(id, name, imageUrl, manageUrl, contactEmail, isHidden){

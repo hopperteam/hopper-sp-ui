@@ -19,11 +19,7 @@ async function overwriteCreateNotificationForm(api, showError) {
             delete body.imageUrl;
         }
 
-        const response = await api.post("/notification", body, {
-            params: {
-                token: getToken()
-            }
-        });
+        const response = await api.post("/notification", body);
 
         try {
             const status = response.data.status.toString();

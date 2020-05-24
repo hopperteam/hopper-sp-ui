@@ -8,11 +8,7 @@ async function spRoute(el, spTemplate, api, showError) {
 
     try {
         // Load Service Provider
-        const response = await api.get("/apps", {
-            params: {
-                token: getToken()
-            }
-        });
+        const response = await api.get("/apps");
         const apps = response.data;
         let html = spTemplate({apps: apps});
         el.html(html);

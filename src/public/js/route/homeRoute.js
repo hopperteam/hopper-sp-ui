@@ -8,21 +8,9 @@ async function homeRoute(el, homeTemplate, api, showError) {
     try {
         // Load Service Provider
         // do all request and then wait
-        let subscriber = api.get("/subscribers", {
-            params: {
-                token: getToken()
-            }
-        });
-        let sp = api.get("/apps", {
-            params: {
-                token: getToken()
-            }
-        });
-        let noti = api.get("/notifications", {
-            params: {
-                token: getToken()
-            }
-        });
+        let subscriber = api.get("/subscribers");
+        let sp = api.get("/apps");
+        let noti = api.get("/notifications");
         const subscribers = (await subscriber).data;
         const app = (await sp).data;
         const notification = (await noti).data;

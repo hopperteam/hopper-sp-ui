@@ -8,11 +8,7 @@ async function overwriteCreateSubscriberForm(api, showError) {
             appId: form.elements.appId.value
         };
 
-        const response = await api.post("/subscriber", body, {
-            params: {
-                token: getToken()
-            }
-        });
+        const response = await api.post("/subscriber", body);
 
         try {
             const status = response.data.status.toString();
