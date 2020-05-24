@@ -1,6 +1,7 @@
 /*global Handlebars, axios,
-* homeRoute, spRoute, subscriberRoute, notificationRoute, userRoute*/
+* homeRoute, spRoute, subscriberRoute, notificationRoute, userRoute, Router*/
 /*eslint no-undef: "error"*/
+/*eslint no-lone-blocks: "error"*/
 
 async function getUser(api, showError) {
     try {
@@ -54,7 +55,6 @@ window.addEventListener("load", async () => {
                     message = error.response.data.reason;
             }
         }
-        console.log(message);
 
         const html = errorTemplate({ color: "red", title, message });
         el.html(html);
