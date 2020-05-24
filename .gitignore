@@ -5,3 +5,4 @@ node_modules/
 tslint.json
 .env
 package-lock.json
+/cert
