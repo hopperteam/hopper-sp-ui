@@ -2,7 +2,12 @@
 * homeRoute, spRoute, subscriberRoute, notificationRoute, userRoute*/
 /*eslint no-undef: "error"*/
 
-window.addEventListener("load", () => {
+window.addEventListener("load", async () => {
+    // Instantiate api handler
+    const api = axios.create({
+        timeout: 5000
+    });
+
     const el = $("#app");
 
     // Compile Handlebar Templates
@@ -11,7 +16,6 @@ window.addEventListener("load", () => {
     const spTemplate = Handlebars.compile($("#sp-template").html());
     const subscriberTemplate = Handlebars.compile($("#subscriber-template").html());
     const notificationTemplate = Handlebars.compile($("#notification-template").html());
-    const loginTemplate = Handlebars.compile($("#login-template").html());
     const logoutTemplate = Handlebars.compile($("#logout-template").html());
 
     // Handler Declaration
@@ -25,11 +29,6 @@ window.addEventListener("load", () => {
             });
             el.html(html);
         },
-    });
-
-    // Instantiate api handler
-    const api = axios.create({
-        timeout: 5000
     });
 
     // Display Error Banner
@@ -46,10 +45,25 @@ window.addEventListener("load", () => {
                     message = error.response.data.reason;
             }
         }
+        console.log(message);
 
         const html = errorTemplate({ color: "red", title, message });
         el.html(html);
     };
+
+    async function getUser() {
+        try {
+            const response = await api.get("/user");
+            return response.data;
+        } catch (e) {
+            showError("Error", e);
+        }
+    }
+
+    const user = await getUser();
+
+    document.getElementById("user").style.color = "black";
+    document.getElementById("user").textContent = user.firstName + " " + user.lastName;
 
     router.add("/", async () => {
         await homeRoute(el, homeTemplate, api, showError);
@@ -67,8 +81,8 @@ window.addEventListener("load", () => {
         await notificationRoute(el, notificationTemplate, api, showError);
     });
 
-    router.add("/user", async () => {
-        await userRoute(el, logoutTemplate, loginTemplate, api, showError);
+    router.add("/ulogout", async () => {
+        await userRoute(el, logoutTemplate, api, showError);
     });
 
     // Navigate app to current url
@@ -94,62 +108,8 @@ window.addEventListener("load", () => {
     });
 });
 
-// Set Navigation Bar User Name
-window.onload = function () {
-    //localStorage.setItem("user", "Test");
-    const user = getUser();
-    if(user) {
-        document.getElementById("user").style.color = "black";
-        document.getElementById("user").textContent = user;
-    } else {
-        document.getElementById("user").textContent = "Login";
-    }
-};
-
-function logoutFunction() {
-    localStorage.removeItem("user");
-    localStorage.removeItem("userToken");
-    location.reload();
-}
-
-function getUser() {
-    // Check if cookie is set
-    const cookie = getCookie("HOPPER_SESSION");
-    if(cookie){
-        console.log(cookie);
-    } else {
-        console.log("No Session");
-    }
-
-    return localStorage.getItem("user");
-}
-
-function getCookie(cname) {
-    const name = cname + "=";
-    const decodedCookie = decodeURIComponent(document.cookie);
-    const ca = decodedCookie.split(';');
-    for(let i = 0; i <ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-}
-
-function setUser(user) {
-    return localStorage.setItem("user", user);
-}
-
 function getToken(){
     return localStorage.getItem("userToken");
-}
-
-function setToken(token) {
-    return localStorage.setItem("userToken", token);
 }
 
 function updateSp(id, name, imageUrl, manageUrl, contactEmail, isHidden){
