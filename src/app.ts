@@ -7,6 +7,7 @@ import NotificationHandler from "./server/handler/notificationHandler";
 import SpHandler from "./server/handler/spHandler";
 import SubscriberHandler from "./server/handler/subscriberHandler";
 import UserHandler from "./server/handler/userHandler";
+import cookieParser from "cookie-parser";
 
 class SPServer {
     private readonly server: express.Application;
@@ -20,6 +21,9 @@ class SPServer {
 
         // Use body parser
         this.server.use(bodyParser.json());
+
+        // Use cookie parser
+        this.server.use(cookieParser());
     }
 
     public async start(): Promise<void> {
