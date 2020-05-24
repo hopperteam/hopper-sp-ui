@@ -12,6 +12,7 @@ export default class AuthMiddleware {
             // get cookie from frontend
             const sid = req.cookies.HOPPER_SESSION;
             if (sid == undefined) {
+                console.log("Cookie undefined");
                 utils.handleError(new Error(Config.instance.authRedirectUrl + "?target=" + Config.instance.baseUrl),
                     res, 401);
                 return;
@@ -20,6 +21,7 @@ export default class AuthMiddleware {
             const session = await Session.decode(sid);
 
             if (!session){
+                console.log("Cookie not valid");
                 utils.handleError(new Error(Config.instance.authRedirectUrl + "?target=" + Config.instance.baseUrl),
                     res, 401);
                 return;
