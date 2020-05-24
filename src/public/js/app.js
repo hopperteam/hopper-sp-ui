@@ -2,6 +2,15 @@
 * homeRoute, spRoute, subscriberRoute, notificationRoute, userRoute*/
 /*eslint no-undef: "error"*/
 
+async function getUser(api, showError) {
+    try {
+        const response = await api.get("/user");
+        return response.data;
+    } catch (e) {
+        showError("Error", e);
+    }
+}
+
 window.addEventListener("load", async () => {
     // Instantiate api handler
     const api = axios.create({
@@ -98,15 +107,6 @@ window.addEventListener("load", async () => {
         router.navigateTo(path);
     });
 });
-
-async function getUser(api, showError) {
-    try {
-        const response = await api.get("/user");
-        return response.data;
-    } catch (e) {
-        showError("Error", e);
-    }
-}
 
 function updateSp(id, name, imageUrl, manageUrl, contactEmail, isHidden){
     const form = document.getElementById("formUpdateSp");
