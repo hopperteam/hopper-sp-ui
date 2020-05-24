@@ -6,3 +6,4 @@ tslint.json
 .env
 package-lock.json
 /cert
+/rsa.public
