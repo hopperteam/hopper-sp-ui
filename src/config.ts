@@ -1,3 +1,5 @@
+import * as fs from "fs";
+
 export namespace Config {
     function getEnv(key: any, name: string, status: any): any{
         if(!key){
@@ -20,6 +22,9 @@ export namespace Config {
         data.redirectUrl = getEnv(process.env.REDIRECTURL, "REDIRECTURL", status);
         data.passphrase = getEnv(process.env.PASSPHRASE, "PASSPHRASE", status);
         data.notificationUrl = getEnv(process.env.NOTIFICATIONURL, "NOTIFICATIONURL", status);
+        data.jwtCertPath = getEnv(process.env.JWTCERTPATH, "JWTCERTPATH", status);
+        data.permissionNamespace = getEnv(process.env.PERMISSIONNAMESPACE, "PERMISSIONNAMESPACE", status);
+        data.authRedirectUrl = getEnv(process.env.AUTHREDIRECTURL, "AUTHREDIRECTURL", status);
 
         instance = new ConfigHolder(data);
         return status.status;
@@ -34,6 +39,9 @@ export namespace Config {
         readonly callbackUrl: string;
         readonly redirectUrl: string;
         readonly notificationUrl: string;
+        readonly jwtCert: Buffer;
+        readonly permissionNamespace: string;
+        readonly authRedirectUrl: string;
 
         constructor(data: any) {
             this.port = data.port;
@@ -44,6 +52,9 @@ export namespace Config {
             this.callbackUrl = data.callbackUrl;
             this.redirectUrl = data.redirectUrl;
             this.notificationUrl = data.notificationUrl;
+            this.jwtCert = fs.readFileSync(data.jwtCertPath);
+            this.permissionNamespace = data.permissionNamespace;
+            this.authRedirectUrl = data.authRedirectUrl;
         }
     }
 
