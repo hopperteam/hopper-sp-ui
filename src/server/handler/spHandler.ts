@@ -16,7 +16,8 @@ export default class SpHandler extends Handler {
 
     private async getAll(req: express.Request, res: express.Response): Promise<void> {
         try {
-            const apps = await App.find({userId: req.query.token});
+            // @ts-ignore
+            const apps = await App.find({userId: req.session.user.id});
             res.json(apps);
         } catch (e) {
             utils.handleError(e, res, 400);
@@ -25,7 +26,8 @@ export default class SpHandler extends Handler {
 
     private async create(req: express.Request, res: express. Response): Promise<void> {
         try {
-            const response = await this.createApp(req.body, req.query.token.toString(),
+            // @ts-ignore
+            const response = await this.createApp(req.body, req.session.user.id,
                 Config.instance.passphrase, Config.instance.baseUrl, Config.instance.spRequestUrl);
             if(!response.status.toString().localeCompare("error"))
                 throw new Error(response.message);
@@ -42,7 +44,8 @@ export default class SpHandler extends Handler {
 
     private async update(req: express.Request, res: express. Response): Promise<void> {
         try {
-            const app = await App.findOne({id: req.body.id, userId: req.query.token});
+            // @ts-ignore
+            const app = await App.findOne({id: req.body.id, userId: req.session.user.id});
             if (!app)
                 throw new Error("Could not find app");
             const privatKeyBefore = app.privateKey;

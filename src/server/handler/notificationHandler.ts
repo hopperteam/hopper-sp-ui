@@ -16,7 +16,8 @@ export default class NotificationHandler extends Handler {
 
     private async getAll(req: express.Request, res: express.Response): Promise<void> {
         try {
-            const notifications = await Notification.find({userId: req.query.token}).populate("subscriber");
+            // @ts-ignore
+            const notifications = await Notification.find({userId: req.session.user.id}).populate("subscriber");
             res.json(notifications);
         } catch (e) {
             utils.handleError(e, res, 400);
@@ -25,7 +26,8 @@ export default class NotificationHandler extends Handler {
 
     private async create(req: express.Request, res: express.Response): Promise<void> {
         try {
-            const subscriber = await Subscriber.findOne({id: req.body.subscriberId, userId: req.query.token});
+            // @ts-ignore
+            const subscriber = await Subscriber.findOne({id: req.body.subscriberId, userId: req.session.user.id});
             if (!subscriber)
                 throw new Error("Could not find subscriber");
 
@@ -40,7 +42,8 @@ export default class NotificationHandler extends Handler {
 
             notification.id = result.message;
             notification.subscriber = subscriber;
-            notification.userId = req.query.token;
+            // @ts-ignore
+            notification.userId = req.session.user.id;
 
             const save = await Notification.create(notification);
 
