@@ -33,7 +33,7 @@ async function homeRoute(el, homeTemplate, api, showError) {
                 .accordion()
             ;
         } catch (e) {
-            showError("Error", "An unexpected error occurred");
+            showError("Error", e);
         }
     }
 

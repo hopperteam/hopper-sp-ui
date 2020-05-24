@@ -31,7 +31,7 @@ async function overwriteCreateSpForm(api, showError) {
                 field.textContent = response.data.reason.toString();
             }
         } catch (e) {
-            showError("Error", "An unexpected error occurred");
+            showError("Error", e);
         }
     }
 }
@@ -66,7 +66,7 @@ async function overwriteUpdateSpForm(api, showError) {
                 field.textContent = response.data.reason.toString();
             }
         } catch (e) {
-            showError("Error", "An unexpected error occurred");
+            showError("Error", e);
         }
     }
 }

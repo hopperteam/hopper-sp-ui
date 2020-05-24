@@ -25,7 +25,7 @@ async function spRoute(el, spTemplate, api, showError) {
             await overwriteCreateSpForm(api, showError);
             await overwriteUpdateSpForm(api, showError);
         } catch (e) {
-            showError("Error", "An unexpected error occurred");
+            showError("Error", e);
         }
     } else{
         document.getElementById("CreateSp").disabled = true;

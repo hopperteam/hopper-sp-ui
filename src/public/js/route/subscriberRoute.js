@@ -19,7 +19,7 @@ async function subscriberRoute(el, subscriberTemplate, api, showError) {
             await overwriteCreateSubscriberForm(api, showError);
 
         } catch (e) {
-            showError("Error", "An unexpected error occurred");
+            showError("Error", e);
         }
     } else{
         document.getElementById("CreateSubscriber").disabled = true;

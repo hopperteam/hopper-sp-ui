@@ -19,7 +19,7 @@ async function notificationRoute(el, notificationTemplate, api, showError) {
             await overwriteCreateNotificationForm(api, showError);
 
         } catch (e) {
-            showError("Error", "An unexpected error occurred");
+            showError("Error", e);
         }
     } else{
         document.getElementById("CreateNotification").disabled = true;

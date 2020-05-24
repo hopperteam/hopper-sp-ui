@@ -33,7 +33,20 @@ window.addEventListener("load", () => {
     });
 
     // Display Error Banner
-    const showError = (title, message) => {
+    const showError = (title, error) => {
+        let message = error.message;
+
+        // handle special errors
+        if (error.response) {
+            switch (error.response.status) {
+                case 401:
+                    location.replace(error.response.data.reason);
+                    break;
+                default:
+                    message = error.response.data.reason;
+            }
+        }
+
         const html = errorTemplate({ color: "red", title, message });
         el.html(html);
     };
@@ -100,7 +113,31 @@ function logoutFunction() {
 }
 
 function getUser() {
+    // Check if cookie is set
+    const cookie = getCookie("HOPPER_SESSION");
+    if(cookie){
+        console.log(cookie);
+    } else {
+        console.log("No Session");
+    }
+
     return localStorage.getItem("user");
+}
+
+function getCookie(cname) {
+    const name = cname + "=";
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
 }
 
 function setUser(user) {

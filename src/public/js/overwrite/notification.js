@@ -35,7 +35,7 @@ async function overwriteCreateNotificationForm(api, showError) {
                 field.textContent = response.data.reason.toString();
             }
         } catch (e) {
-            showError("Error", "An unexpected error occurred");
+            showError("Error", e);
         }
     }
 }
