@@ -40,7 +40,7 @@ window.addEventListener("load", async () => {
             switch (error.response.status) {
                 case 401:
                     location.replace(error.response.data.reason);
-                    break;
+                    return;
                 default:
                     message = error.response.data.reason;
             }
