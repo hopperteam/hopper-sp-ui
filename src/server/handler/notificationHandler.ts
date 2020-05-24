@@ -19,7 +19,7 @@ export default class NotificationHandler extends Handler {
             const notifications = await Notification.find({userId: req.query.token}).populate("subscriber");
             res.json(notifications);
         } catch (e) {
-            utils.handleError(e, res);
+            utils.handleError(e, res, 400);
         }
     }
 

@@ -21,7 +21,7 @@ export default class SubscriberHandler extends Handler {
             const subscriber = await Subscriber.find({userId: req.query.token}).populate("app");
             res.json(subscriber);
         } catch (e) {
-            utils.handleError(e, res);
+            utils.handleError(e, res, 400);
         }
     }
 
@@ -62,7 +62,7 @@ export default class SubscriberHandler extends Handler {
                 res.redirect("/subscribe");
             }
         } catch (e) {
-            utils.handleError(e, res);
+            utils.handleError(e, res, 400);
         }
     }
 }

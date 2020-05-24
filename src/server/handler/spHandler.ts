@@ -19,7 +19,7 @@ export default class SpHandler extends Handler {
             const apps = await App.find({userId: req.query.token});
             res.json(apps);
         } catch (e) {
-            utils.handleError(e, res);
+            utils.handleError(e, res, 400);
         }
     }
 

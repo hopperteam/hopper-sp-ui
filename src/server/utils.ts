@@ -4,10 +4,10 @@ import * as jwt from "jsonwebtoken";
 
 const SALT = "TL]{~eeo=u8J>j>@th8Psh4FQZ:^Wz)UMi;/vXst";
 
-export function handleError(err: Error, res: express.Response, statusCode: number = 400) {
+export function handleError(err: Error, res: express.Response, statusCode: number = 200) {
     console.log(err.message);
     // pass error to frontend
-    res.setHeader("Content-Type", "application/json");
+    res.status(statusCode);
     res.json({
         "status": "error",
         "reason": err.message
