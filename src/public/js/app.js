@@ -2,6 +2,7 @@
 * homeRoute, spRoute, subscriberRoute, notificationRoute, userRoute, Router*/
 /*eslint no-undef: "error"*/
 /*eslint no-lone-blocks: "error"*/
+/*eslint-env es6*/
 
 async function getUser(api, showError) {
     try {
