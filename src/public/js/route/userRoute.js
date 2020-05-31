@@ -1,6 +1,6 @@
 async function userRoute(el, logoutTemplate, api, showError) {
 
-    const html = logoutTemplate();
+    let html = logoutTemplate();
     el.html(html);
 
     try {
