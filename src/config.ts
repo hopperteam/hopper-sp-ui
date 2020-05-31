@@ -52,9 +52,11 @@ export namespace Config {
             this.callbackUrl = data.callbackUrl;
             this.redirectUrl = data.redirectUrl;
             this.notificationUrl = data.notificationUrl;
-            this.jwtCert = fs.readFileSync(data.jwtCertPath);
             this.permissionNamespace = data.permissionNamespace;
             this.authRedirectUrl = data.authRedirectUrl;
+
+            if(data.jwtCertPath)
+                this.jwtCert = fs.readFileSync(data.jwtCertPath);
         }
     }
 

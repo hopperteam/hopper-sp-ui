@@ -80,7 +80,7 @@ window.addEventListener("load", async () => {
         await notificationRoute(el, notificationTemplate, api, showError);
     });
 
-    router.add("/ulogout", async () => {
+    router.add("/logoff", async () => {
         await userRoute(el, logoutTemplate, api, showError);
     });
 

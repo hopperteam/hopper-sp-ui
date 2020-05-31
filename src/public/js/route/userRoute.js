@@ -1,12 +1,4 @@
 async function userRoute(el, logoutTemplate, api, showError) {
-    async function logoutFunction() {
-        try {
-            const response = await api.get("/logout");
-            location.replace(response.data.redirect);
-        } catch (e) {
-            showError("Error", e);
-        }
-    }
 
     const html = logoutTemplate();
     el.html(html);
@@ -18,8 +10,19 @@ async function userRoute(el, logoutTemplate, api, showError) {
         let html = logoutTemplate({firstName: user.firstName, lastName: user.lastName});
         el.html(html);
 
-        document.getElementById("logout").addEventListener("click", logoutFunction);
+        document.getElementById("logout").addEventListener("click", function(){
+            logoutFunction(api, showError);
+        });
 
+    } catch (e) {
+        showError("Error", e);
+    }
+}
+
+async function logoutFunction(api, showError) {
+    try {
+        const response = await api.get("/logout");
+        location.replace(response.data.redirect);
     } catch (e) {
         showError("Error", e);
     }

@@ -18,7 +18,6 @@ export default class SubscriberHandler extends Handler {
 
     private async getAll(req: express.Request, res: express.Response): Promise<void> {
         try {
-            // @ts-ignore
             const subscriber = await Subscriber.find({userId: req.session.user.id}).populate("app");
             res.json(subscriber);
         } catch (e) {
@@ -28,11 +27,9 @@ export default class SubscriberHandler extends Handler {
 
     private async create(req: express.Request, res: express. Response): Promise<void> {
         try {
-            // @ts-ignore
             const app = await App.findOne({id: req.body.appId, userId: req.session.user.id});
             if (!app)
                 throw new Error("Could not find app");
-            // @ts-ignore
             const subscriptionRequest = await subscriberAPI.createSubscriber(req.body, req.session.user.id,
                 Config.instance.passphrase, Config.instance.callbackUrl, app);
 
@@ -53,7 +50,6 @@ export default class SubscriberHandler extends Handler {
     private async approve(req: express.Request, res: express. Response): Promise<void> {
         try {
             if(!req.query.status.toString().localeCompare("success")){
-                // @ts-ignore
                 const subscriber = await Subscriber.findOne({_id: req.query.internalId, userId: req.session.user.id});
                 if(!subscriber)
                     throw new Error("Could not find subscriber");
