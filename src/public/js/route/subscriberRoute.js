@@ -6,7 +6,7 @@ async function subscriberRoute(el, subscriberTemplate, api, showError) {
         // Load Service Provider
         const response = await api.get("/apps");
         const apps = response.data;
-        let html = subscriberTemplate({apps: apps});
+        html = subscriberTemplate({apps: apps});
         el.html(html);
 
         await overwriteCreateSubscriberForm(api, showError);

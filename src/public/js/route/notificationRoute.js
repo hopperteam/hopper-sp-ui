@@ -6,7 +6,7 @@ async function notificationRoute(el, notificationTemplate, api, showError) {
         // Load Service Provider
         const response = await api.get("/subscribers");
         const subscriber = response.data;
-        let html = notificationTemplate({subscribers: subscriber});
+        html = notificationTemplate({subscribers: subscriber});
         el.html(html);
 
         await overwriteCreateNotificationForm(api, showError);

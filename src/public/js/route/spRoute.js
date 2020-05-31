@@ -10,7 +10,7 @@ async function spRoute(el, spTemplate, api, showError) {
         // Load Service Provider
         const response = await api.get("/apps");
         const apps = response.data;
-        let html = spTemplate({apps: apps});
+        html = spTemplate({apps: apps});
         el.html(html);
         $('.ui.accordion')
             .accordion()

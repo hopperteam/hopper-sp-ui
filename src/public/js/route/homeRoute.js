@@ -14,7 +14,7 @@ async function homeRoute(el, homeTemplate, api, showError) {
         const subscribers = (await subscriber).data;
         const app = (await sp).data;
         const notification = (await noti).data;
-        let html = homeTemplate({apps: app, subscribers: subscribers, notifications: notification});
+        html = homeTemplate({apps: app, subscribers: subscribers, notifications: notification});
         el.html(html);
         $('.ui.accordion')
             .accordion()

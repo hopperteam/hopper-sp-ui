@@ -7,7 +7,7 @@ async function userRoute(el, logoutTemplate, api, showError) {
         // Load User
         const response = await api.get("/user");
         const user = response.data;
-        let html = logoutTemplate({firstName: user.firstName, lastName: user.lastName});
+        html = logoutTemplate({firstName: user.firstName, lastName: user.lastName});
         el.html(html);
 
         document.getElementById("logout").addEventListener("click", function(){
