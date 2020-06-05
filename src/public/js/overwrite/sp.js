@@ -16,11 +16,7 @@ async function overwriteCreateSpForm(api, showError) {
             delete body.manageUrl;
         }
 
-        const response = await api.post("/app", body, {
-            params: {
-                token: getToken()
-            }
-        });
+        const response = await api.post("/app", body);
         try {
             const status = response.data.status.toString();
             if (status.localeCompare("success") == 0) {
@@ -31,7 +27,7 @@ async function overwriteCreateSpForm(api, showError) {
                 field.textContent = response.data.reason.toString();
             }
         } catch (e) {
-            showError("Error", "An unexpected error occurred");
+            showError("Error", e);
         }
     }
 }
@@ -50,11 +46,7 @@ async function overwriteUpdateSpForm(api, showError) {
             newCert: form.elements.newCert.checked
         };
 
-        const response = await api.put("/app", body, {
-            params: {
-                token: getToken()
-            }
-        });
+        const response = await api.put("/app", body);
 
         try {
             const status = response.data.status.toString();
@@ -66,7 +58,7 @@ async function overwriteUpdateSpForm(api, showError) {
                 field.textContent = response.data.reason.toString();
             }
         } catch (e) {
-            showError("Error", "An unexpected error occurred");
+            showError("Error", e);
         }
     }
 }

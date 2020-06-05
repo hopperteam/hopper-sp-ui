@@ -11,4 +11,7 @@ SPREQUESTURL=https://api-dev.hoppercloud.net/v1/app
 NOTIFICATIONURL=https://api-dev.hoppercloud.net/v1/notification
 CALLBACKURL=http://localhost:4000/subscriber
 REDIRECTURL=https://dev.hoppercloud.net/subscribe
+JWTCERTPATH=../cert
+PERMISSIONNAMESPACE=HopperDev
+AUTHREDIRECTURL=https://account.hoppercloud.net
 ```

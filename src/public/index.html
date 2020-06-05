@@ -25,9 +25,9 @@
         <a class="item" id="nt" href="/notification">
             Notifications
         </a>
-        <a class="item" href="/user">
-            <i class="user alternate outline icon" href="/user"></i>
-            <p id="user" href="/user"></p>
+        <a class="item" href="/logoff">
+            <i class="user alternate outline icon" href="/logoff"></i>
+            <p id="user" href="/logoff"></p>
         </a>
     </div>
 
@@ -42,8 +42,6 @@
 <script src="scripts/handlebars/dist/handlebars.min.js"></script>
 <script src="scripts/vanilla-router/dist/vanilla-router.min.js"></script>
 <script src="js/app.js"></script>
-<script src="js/overwrite/signIn.js"></script>
-<script src="js/overwrite/signUp.js"></script>
 <script src="js/overwrite/sp.js"></script>
 <script src="js/overwrite/subscriber.js"></script>
 <script src="js/overwrite/notification.js"></script>
@@ -393,56 +391,11 @@
     </div>
 </script>
 
-<!-- Login Template -->
-<script id="login-template" type="text/x-handlebars-template">
-    <h1 class="ui header">Login</h1>
-    <hr>
-    <div class="ui styled fluid accordion">
-        <div class="title">
-            <i class="dropdown icon"></i>
-            Sign In
-        </div>
-        <div class="content">
-            <form class="ui form" id="formSignIn">
-                <div class="field">
-                    <label>Email</label>
-                    <input name="email" type="text" placeholder="max.musterman@example.com" required> <br>
-                </div>
-                <div class="field">
-                    <label>Password</label>
-                    <input name="password" type="password" value="" required>
-                </div>
-                <button class="ui button" type="submit">Submit</button>
-                <p id="errorSignIn"></p>
-            </form>
-        </div>
-
-        <div class="title">
-            <i class="dropdown icon"></i>
-            Sign Up
-        </div>
-        <div class="content">
-            <form class="ui form" id="formSignUp">
-                <div class="field">
-                    <label>Email</label>
-                    <input name="email" type="text" placeholder="max.musterman@example.com" required> <br>
-                </div>
-                <div class="field">
-                    <label>Password</label>
-                    <input name="password" type="password" value="" required>
-                </div>
-                <button class="ui button" type="submit">Submit</button>
-                <p id="errorSignUp"></p>
-            </form>
-        </div>
-    </div>
-</script>
-
 <!-- Logout Template -->
 <script id="logout-template" type="text/x-handlebars-template">
-    <h1 class="ui header">Account: <i>{{user}}</i></h1>
+    <h1 class="ui header">Account: <i>{{firstName}} {{lastName}}</i></h1>
     <hr>
-    <button class="fluid right labeled icon ui button" onclick="logoutFunction()">
+    <button id="logout" class="fluid right labeled icon ui button">
         <i class="right arrow icon"></i>
         Logout
     </button>

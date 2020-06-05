@@ -18,19 +18,19 @@ export default class SubscriberHandler extends Handler {
 
     private async getAll(req: express.Request, res: express.Response): Promise<void> {
         try {
-            const subscriber = await Subscriber.find({userId: req.query.token}).populate("app");
+            const subscriber = await Subscriber.find({userId: req.session.user.id}).populate("app");
             res.json(subscriber);
         } catch (e) {
-            utils.handleError(e, res);
+            utils.handleError(e, res, 400);
         }
     }
 
     private async create(req: express.Request, res: express. Response): Promise<void> {
         try {
-            const app = await App.findOne({id: req.body.appId, userId: req.query.token});
+            const app = await App.findOne({id: req.body.appId, userId: req.session.user.id});
             if (!app)
                 throw new Error("Could not find app");
-            const subscriptionRequest = await subscriberAPI.createSubscriber(req.body, req.query.token.toString(),
+            const subscriptionRequest = await subscriberAPI.createSubscriber(req.body, req.session.user.id,
                 Config.instance.passphrase, Config.instance.callbackUrl, app);
 
             const query = querystring.stringify({
@@ -50,7 +50,7 @@ export default class SubscriberHandler extends Handler {
     private async approve(req: express.Request, res: express. Response): Promise<void> {
         try {
             if(!req.query.status.toString().localeCompare("success")){
-                const subscriber = await Subscriber.findOne({_id: req.query.internalId, userId: req.query.token});
+                const subscriber = await Subscriber.findOne({_id: req.query.internalId, userId: req.session.user.id});
                 if(!subscriber)
                     throw new Error("Could not find subscriber");
                 subscriber.id = req.query.id;
@@ -62,7 +62,7 @@ export default class SubscriberHandler extends Handler {
                 res.redirect("/subscribe");
             }
         } catch (e) {
-            utils.handleError(e, res);
+            utils.handleError(e, res, 400);
         }
     }
 }

@@ -16,16 +16,16 @@ export default class SpHandler extends Handler {
 
     private async getAll(req: express.Request, res: express.Response): Promise<void> {
         try {
-            const apps = await App.find({userId: req.query.token});
+            const apps = await App.find({userId: req.session.user.id});
             res.json(apps);
         } catch (e) {
-            utils.handleError(e, res);
+            utils.handleError(e, res, 400);
         }
     }
 
     private async create(req: express.Request, res: express. Response): Promise<void> {
         try {
-            const response = await this.createApp(req.body, req.query.token.toString(),
+            const response = await this.createApp(req.body, req.session.user.id,
                 Config.instance.passphrase, Config.instance.baseUrl, Config.instance.spRequestUrl);
             if(!response.status.toString().localeCompare("error"))
                 throw new Error(response.message);
@@ -42,10 +42,10 @@ export default class SpHandler extends Handler {
 
     private async update(req: express.Request, res: express. Response): Promise<void> {
         try {
-            const app = await App.findOne({id: req.body.id, userId: req.query.token});
+            const app = await App.findOne({id: req.body.id, userId: req.session.user.id});
             if (!app)
                 throw new Error("Could not find app");
-            const privatKeyBefore = app.privateKey;
+            const privateKeyBefore = app.privateKey;
             const update = this.updateApp(app, req.body, Config.instance.passphrase);
             const strippedApp = Object.assign({}, {
                 name: update.name, imageUrl: update.imageUrl,
@@ -53,7 +53,7 @@ export default class SpHandler extends Handler {
                 contactEmail: update.contactEmail, cert: update.cert
             });
 
-            const requestStr = utils.encryptVerify(strippedApp, Config.instance.passphrase, privatKeyBefore);
+            const requestStr = utils.encryptVerify(strippedApp, Config.instance.passphrase, privateKeyBefore);
             const status = await appAPI.updateRequest(Config.instance.spRequestUrl, app.id, requestStr);
             if(!status.localeCompare("success")){
                 await app.updateOne(update);
@@ -84,7 +84,7 @@ export default class SpHandler extends Handler {
     }
 
     private updateApp(app: object, update: any, passphrase: string): any {
-        // update primative fields
+        // update primitive fields
         Object.assign(app, {
             name: update.name, imageUrl: update.imageUrl, isHidden: update.isHidden,
             manageUrl: update.manageUrl, contactEmail: update.contactEmail

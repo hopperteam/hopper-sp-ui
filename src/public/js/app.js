@@ -1,8 +1,22 @@
 /*global Handlebars, axios,
-* homeRoute, spRoute, subscriberRoute, notificationRoute, userRoute*/
+* homeRoute, spRoute, subscriberRoute, notificationRoute, userRoute, Router*/
 /*eslint no-undef: "error"*/
 
-window.addEventListener("load", () => {
+async function getUser(api, showError) {
+    try {
+        const response = await api.get("/user");
+        return response.data;
+    } catch (e) {
+        showError("Error", e);
+    }
+}
+
+window.addEventListener("load", async () => {
+    // Instantiate api handler
+    const api = axios.create({
+        timeout: 5000
+    });
+
     const el = $("#app");
 
     // Compile Handlebar Templates
@@ -11,7 +25,6 @@ window.addEventListener("load", () => {
     const spTemplate = Handlebars.compile($("#sp-template").html());
     const subscriberTemplate = Handlebars.compile($("#subscriber-template").html());
     const notificationTemplate = Handlebars.compile($("#notification-template").html());
-    const loginTemplate = Handlebars.compile($("#login-template").html());
     const logoutTemplate = Handlebars.compile($("#logout-template").html());
 
     // Handler Declaration
@@ -27,16 +40,29 @@ window.addEventListener("load", () => {
         },
     });
 
-    // Instantiate api handler
-    const api = axios.create({
-        timeout: 5000
-    });
-
     // Display Error Banner
-    const showError = (title, message) => {
+    const showError = (title, error) => {
+        let message = error.message;
+
+        // handle special errors
+        if (error.response) {
+            switch (error.response.status) {
+                case 401:
+                    location.replace(error.response.data.reason);
+                    return;
+                default:
+                    message = error.response.data.reason;
+            }
+        }
+
         const html = errorTemplate({ color: "red", title, message });
         el.html(html);
     };
+
+    const user = await getUser(api, showError);
+
+    document.getElementById("user").style.color = "black";
+    document.getElementById("user").textContent = user.firstName + " " + user.lastName;
 
     router.add("/", async () => {
         await homeRoute(el, homeTemplate, api, showError);
@@ -54,8 +80,8 @@ window.addEventListener("load", () => {
         await notificationRoute(el, notificationTemplate, api, showError);
     });
 
-    router.add("/user", async () => {
-        await userRoute(el, logoutTemplate, loginTemplate, api, showError);
+    router.add("/logoff", async () => {
+        await userRoute(el, logoutTemplate, api, showError);
     });
 
     // Navigate app to current url
@@ -80,40 +106,6 @@ window.addEventListener("load", () => {
         router.navigateTo(path);
     });
 });
-
-// Set Navigation Bar User Name
-window.onload = function () {
-    //localStorage.setItem("user", "Test");
-    const user = getUser();
-    if(user) {
-        document.getElementById("user").style.color = "black";
-        document.getElementById("user").textContent = user;
-    } else {
-        document.getElementById("user").textContent = "Login";
-    }
-};
-
-function logoutFunction() {
-    localStorage.removeItem("user");
-    localStorage.removeItem("userToken");
-    location.reload();
-}
-
-function getUser() {
-    return localStorage.getItem("user");
-}
-
-function setUser(user) {
-    return localStorage.setItem("user", user);
-}
-
-function getToken(){
-    return localStorage.getItem("userToken");
-}
-
-function setToken(token) {
-    return localStorage.setItem("userToken", token);
-}
 
 function updateSp(id, name, imageUrl, manageUrl, contactEmail, isHidden){
     const form = document.getElementById("formUpdateSp");

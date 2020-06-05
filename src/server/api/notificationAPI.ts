@@ -5,7 +5,7 @@ export async function sendNotification(notification: object, url: string, subscr
         request.post(url, {json:{"subscriptionId": subscriptionId, "notification":notification}}, (error, res, body) => {
             if (error) {
                 console.error(error)
-                throw new Error("Request to lead to error");
+                resolve({status: "error", message: "Request lead to error"});
             }
             console.log(`statusCode: ${res.statusCode}`);
             if (body.status === "success"){

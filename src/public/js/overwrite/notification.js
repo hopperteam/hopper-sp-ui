@@ -19,11 +19,7 @@ async function overwriteCreateNotificationForm(api, showError) {
             delete body.imageUrl;
         }
 
-        const response = await api.post("/notification", body, {
-            params: {
-                token: getToken()
-            }
-        });
+        const response = await api.post("/notification", body);
 
         try {
             const status = response.data.status.toString();
@@ -35,7 +31,7 @@ async function overwriteCreateNotificationForm(api, showError) {
                 field.textContent = response.data.reason.toString();
             }
         } catch (e) {
-            showError("Error", "An unexpected error occurred");
+            showError("Error", e);
         }
     }
 }

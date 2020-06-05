@@ -7,6 +7,8 @@ import NotificationHandler from "./server/handler/notificationHandler";
 import SpHandler from "./server/handler/spHandler";
 import SubscriberHandler from "./server/handler/subscriberHandler";
 import UserHandler from "./server/handler/userHandler";
+import cookieParser from "cookie-parser";
+import AuthMiddleware from "./server/handler/authMiddleware";
 
 class SPServer {
     private readonly server: express.Application;
@@ -20,6 +22,9 @@ class SPServer {
 
         // Use body parser
         this.server.use(bodyParser.json());
+
+        // Use cookie parser
+        this.server.use(cookieParser());
     }
 
     public async start(): Promise<void> {
@@ -44,6 +49,9 @@ class SPServer {
 
         // Allow front-end access to node_modules folder
         this.server.use("/scripts", express.static(path.resolve(`${__dirname}/../node_modules/`)));
+
+        // Use auth middleware
+        this.server.use(AuthMiddleware.auth("User"));
 
         // Use custom routers
         this.server.use(new NotificationHandler().getRouter());

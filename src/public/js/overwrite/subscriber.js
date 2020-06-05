@@ -8,11 +8,7 @@ async function overwriteCreateSubscriberForm(api, showError) {
             appId: form.elements.appId.value
         };
 
-        const response = await api.post("/subscriber", body, {
-            params: {
-                token: getToken()
-            }
-        });
+        const response = await api.post("/subscriber", body);
 
         try {
             const status = response.data.status.toString();
@@ -24,7 +20,7 @@ async function overwriteCreateSubscriberForm(api, showError) {
                 field.textContent = response.data.reason.toString();
             }
         } catch (e) {
-            showError("Error", "An unexpected error occurred");
+            showError("Error", e);
         }
     }
 }

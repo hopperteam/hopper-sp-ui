@@ -1,21 +1,29 @@
-async function userRoute(el, logoutTemplate, loginTemplate, api, showError) {
-    //check if logged in or not
-    const user = getUser();
-    let html;
+async function userRoute(el, logoutTemplate, api, showError) {
 
-    if(user) {
-        html = logoutTemplate({user: getUser()});
-    } else {
-        html = loginTemplate();
-    }
-
+    let html = logoutTemplate();
     el.html(html);
 
-    if(!user) {
-        $('.ui.accordion')
-            .accordion()
-        ;
-        await overwriteSignInForm(api, showError);
-        await overwriteSignUpForm(api, showError);
+    try {
+        // Load User
+        const response = await api.get("/user");
+        const user = response.data;
+        html = logoutTemplate({firstName: user.firstName, lastName: user.lastName});
+        el.html(html);
+
+        document.getElementById("logout").addEventListener("click", function(){
+            logoutFunction(api, showError);
+        });
+
+    } catch (e) {
+        showError("Error", e);
+    }
+}
+
+async function logoutFunction(api, showError) {
+    try {
+        const response = await api.get("/logout");
+        location.replace(response.data.redirect);
+    } catch (e) {
+        showError("Error", e);
     }
 }
