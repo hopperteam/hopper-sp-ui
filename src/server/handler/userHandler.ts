@@ -20,7 +20,7 @@ export default class UserHandler extends Handler {
 
     private async logout(req: express.Request, res: express.Response): Promise<void> {
         res.json({
-            "redirect": Config.instance.authRedirectUrl + "/logout.html",
+            "redirect": Config.instance.authRedirectUrl + "logout.html",
         });
     }
 }
